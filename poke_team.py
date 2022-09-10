@@ -8,6 +8,7 @@ __author__ = "Scaffold by Jackson Goerner, Code by ______________"
 
 from enum import Enum, auto
 from pokemon_base import PokemonBase
+from pokemon import *
 from random_gen import RandomGen
 from array_sorted_list import ArraySortedList
 from queue_adt import CircularQueue
@@ -65,7 +66,7 @@ class PokeTeam:
         self.team = None
 
         self.set_team()
-        self.fill_team()
+
 
         self.num_of_heals = 3
 
@@ -192,14 +193,69 @@ class PokeTeam:
     def set_team(self):
         if self.battle_mode == 0: # ArrayStack
             self.team = ArrayStack(self.num_of_pokemons)
+            self.fill_team_mode_zero()
         elif self.battle_mode == 1: # CircularQueue
             self.team = CircularQueue(self.num_of_pokemons)
+            self.fill_team_mode_one()
         elif self.battle_mode == 2: # ArraySortedList
             self.team = ArraySortedList(self.num_of_pokemons)
+            self.fill_team_mode_two()
 
 
-    def fill_team(self):
-        pass
+    def fill_team_mode_zero(self):
+        for i in range(len(self.team_numbers)-1,-1,-1):
+            pokemon = None
+            if i == 0:
+                pokemon = Charmander()
+            elif i == 1:
+                pokemon = Bulbassaur()
+            elif i == 2:
+                pokemon = Squirtle()
+            elif i == 3:
+                pokemon = Gastly()
+            elif i == 4:
+                pokemon = Eevee()
+
+            for i in range(team_numbers[i]):
+                self.team.push(pokemon)
+
+
+    def fill_team_mode_one(self):
+        for i in range(len(self.team_numbers)):
+            pokemon = None
+            if i == 0:
+                pokemon = Charmander()
+            elif i == 1:
+                pokemon = Bulbassaur()
+            elif i == 2:
+                pokemon = Squirtle()
+            elif i == 3:
+                pokemon = Gastly()
+            elif i == 4:
+                pokemon = Eevee()
+
+            for i in range(team_numbers[i]):
+                self.team.append(pokemon)
+
+    def fill_team_mode_two(self):
+        for i in range(len(self.team_numbers)):
+            pokemon = None
+            if i == 0:
+                pokemon = Charmander()
+            elif i == 1:
+                pokemon = Bulbassaur()
+            elif i == 2:
+                pokemon = Squirtle()
+            elif i == 3:
+                pokemon = Gastly()
+            elif i == 4:
+                pokemon = Eevee()
+
+            # for i in range(team_numbers[i]):
+            #     self.team.add(ListItem(pokemon,     ))
+
+
+
 
 
 
