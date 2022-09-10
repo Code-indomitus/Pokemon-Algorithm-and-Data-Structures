@@ -139,6 +139,7 @@ class PokeTeam:
             pass
 
         if self.battle_mode == 2:  # ArraySortedList
+
             pass
 
 
