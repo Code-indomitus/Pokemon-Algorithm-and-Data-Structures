@@ -12,7 +12,7 @@ class TestTower(BaseTest):
         bt.set_my_team(PokeTeam.random_team("N", 2, team_size=6, criterion=Criterion.HP))
         bt.generate_teams(4)
         # Teams have 7, 10, 10, 3 lives.
-        RandomGen.set_seed(213098)
+        RandomGen.set_seed(1029873918273)
         results = [
             (1, 6),
             (1, 9),
@@ -97,5 +97,3 @@ class TestTower(BaseTest):
 
         self.assertEqual(str(other_1), str(other_2))
 
-
-        
