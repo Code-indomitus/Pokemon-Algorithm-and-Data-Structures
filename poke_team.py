@@ -203,6 +203,7 @@ class PokeTeam:
 
 
 
+
     @classmethod
     def leaderboard_team(cls):
         raise NotImplementedError()
