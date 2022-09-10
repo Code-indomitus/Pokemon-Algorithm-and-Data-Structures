@@ -91,8 +91,8 @@ class PokeTeam:
 
         # array that stores the number of each pokemon
         team_numbers = []
-        for i in range(0, len(team_numbers) - 1):
-            team_numbers.append(team_numbers[i + 1] - team_numbers[i])
+        for i in range(0, len(random_team_numbers) - 1):
+            team_numbers.append(random_team_numbers.__getitem__(i+1) - random_team_numbers.__getitem__(i))
 
         if ai_mode is None:
             ai_mode = AI.RANDOM
