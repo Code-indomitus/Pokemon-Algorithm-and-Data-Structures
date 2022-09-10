@@ -1,6 +1,7 @@
 from __future__ import annotations
+from inspect import stack
+from sys import last_value
 
-import aiohttp.hdrs
 
 """
 """
@@ -13,6 +14,7 @@ from random_gen import RandomGen
 from array_sorted_list import ArraySortedList
 from queue_adt import CircularQueue
 from stack_adt import  ArrayStack
+from sorted_list import ListItem
 
 
 
@@ -82,13 +84,13 @@ class PokeTeam:
 
         random_team_numbers = ArraySortedList(6)
 
-        random_team_numbers.add(List(None,0))
-        random_team_numbers.add(List(None, team_size))
+        random_team_numbers.add(ListItem(None,0))
+        random_team_numbers.add(ListItem(None, team_size))
 
 
         for i in range(NUM_OF_RANDOMS):
             random_number = RandomGen.random(0, team_size)
-            random_team_numbers.add(List(None,random_number))
+            random_team_numbers.add(ListItem(None,random_number))
 
         # array that stores the number of each pokemon
         team_numbers = []
@@ -96,7 +98,7 @@ class PokeTeam:
             team_numbers.append(random_team_numbers.__getitem__(i+1) - random_team_numbers.__getitem__(i))
 
         if ai_mode is None:
-            ai_mode = AI.RANDOM
+            ai_mode = PokeTeam.AI.RANDOM
 
 
             # rand_num = RandomGen.randint(1, 4)
@@ -113,15 +115,23 @@ class PokeTeam:
 
         return random_team
 
-
+    # FIXME If required
     def return_pokemon(self, pokemon: PokemonBase) -> None:
         if self.battle_mode == 0: # ArrayStack
             self.team.push(pokemon)
         if self.battle_mode == 1: # CircularQueue
             self.team.append(pokemon)
         if self.battle_mode == 2: # ArraySortedList
-            self.team.add(pokemon)
-
+            if self.criterion == Criterion.SPD:
+                self.team.add(ListItem(pokemon, pokemon.get_speed()))
+            elif self.criterion == Criterion.HP:
+                self.team.add(ListItem(pokemon, pokemon.get_hp()))
+            elif self.criterion == Criterion.LV:
+                self.team.add(ListItem(pokemon, pokemon.get_level()))
+            elif self.criterion == Criterion.DEF:
+                self.team.add(ListItem(pokemon, pokemon.get_defence()))
+            
+    # FIXME If required
     def retrieve_pokemon(self) -> PokemonBase | None:
         if self.is_empty():
             pokemon = None
@@ -130,18 +140,41 @@ class PokeTeam:
         elif self.battle_mode == 1:  # CircularQueue
             pokemon = self.team.serve()
         elif self.battle_mode == 2:  # ArraySortedList
-            pokemon = self.team.delete_at_index(0)
+            pokemon = self.team.delete_at_index(0).value
 
-    # TODO
+    # TODO implement special method for battle mode 2
     def special(self):
         if self.battle_mode == 0:  # ArrayStack
-            pass
+            temp_stack = ArrayStack(len(self.team) - 2)
+
+            first_pokemon = self.team.pop()
+
+            while len(self.team) > 1:
+                temp_stack.push(self.team.pop())
+            
+            last_pokemon =self.team.pop()
+
+            self.team.push(first_pokemon)
+
+            while len(temp_stack) > 0:
+                self.team.push(temp_stack.pop())
+            
+            self.team.push(last_pokemon)
+
 
         if self.battle_mode == 1:  # CircularQueue
-            pass
+            half_number = len(self.team) // 2
+            temp_stack = ArrayStack(half_number)
 
+            for _ in range(half_number):
+                temp_stack.push(self.team.serve())
+            
+            for _ in range(half_number):
+                self.team.append(temp_stack.pop())
+
+
+        # TODO implement special method for battle mode 2
         if self.battle_mode == 2:  # ArraySortedList
-
             pass
 
 
@@ -151,9 +184,31 @@ class PokeTeam:
 
         self.num_of_heals = 3
 
-    # TODO
-    def __str__(self):
-        raise NotImplementedError()
+    # TODO string implementation for battle mode 2
+    def __str__(self) -> str:
+        result = self.team_name + " " + "(" + str(self.battle_mode) + ")" + ": "
+
+        pokemon_str_list = ""
+
+        if self.battle_mode == 0:  # ArrayStack
+            stack_length = len(self.team)
+            for _ in range(stack_length):
+                pokemon_str_list += str(self.team.peek()) + ","
+                self.team.length -= 1
+            self.team.length = stack_length
+                
+        elif self.battle_mode == 1:  # CircularQueue
+            for _ in range(len(self.team)):
+                pokemon = self.team.serve()
+                pokemon_str_list += str(pokemon) + ","
+                self.team.append(pokemon)
+
+        # TODO string implementation for battle mode 2
+        elif self.battle_mode == 2:  # ArraySortedList
+            pass
+
+        result += "[" + pokemon_str_list[0:-1] + "]"
+        return result
 
     def is_empty(self):
         is_empty = len(self.team) == 0
@@ -188,8 +243,7 @@ class PokeTeam:
 
         return action
 
-
-    # TODO
+    # FIXME if required
     def set_team(self):
         if self.battle_mode == 0: # ArrayStack
             self.team = ArrayStack(self.num_of_pokemons)
@@ -201,14 +255,14 @@ class PokeTeam:
             self.team = ArraySortedList(self.num_of_pokemons)
             self.fill_team_mode_two()
 
-
+    # FIXME if required
     def fill_team_mode_zero(self):
         for i in range(len(self.team_numbers)-1,-1,-1):
             pokemon = None
             if i == 0:
                 pokemon = Charmander()
             elif i == 1:
-                pokemon = Bulbassaur()
+                pokemon = Bulbasaur()
             elif i == 2:
                 pokemon = Squirtle()
             elif i == 3:
@@ -216,17 +270,17 @@ class PokeTeam:
             elif i == 4:
                 pokemon = Eevee()
 
-            for i in range(team_numbers[i]):
+            for i in range(self.team_numbers[i]):
                 self.team.push(pokemon)
 
-
+    # FIXME if required
     def fill_team_mode_one(self):
         for i in range(len(self.team_numbers)):
             pokemon = None
             if i == 0:
                 pokemon = Charmander()
             elif i == 1:
-                pokemon = Bulbassaur()
+                pokemon = Bulbasaur()
             elif i == 2:
                 pokemon = Squirtle()
             elif i == 3:
@@ -234,16 +288,17 @@ class PokeTeam:
             elif i == 4:
                 pokemon = Eevee()
 
-            for i in range(team_numbers[i]):
+            for i in range(self.team_numbers[i]):
                 self.team.append(pokemon)
 
+    # FIXME if required
     def fill_team_mode_two(self):
         for i in range(len(self.team_numbers)):
             pokemon = None
             if i == 0:
                 pokemon = Charmander()
             elif i == 1:
-                pokemon = Bulbassaur()
+                pokemon = Bulbasaur()
             elif i == 2:
                 pokemon = Squirtle()
             elif i == 3:
@@ -251,15 +306,15 @@ class PokeTeam:
             elif i == 4:
                 pokemon = Eevee()
 
-            # for i in range(team_numbers[i]):
-            #     self.team.add(ListItem(pokemon,     ))
-
-
-
-
-
-
-
+            for i in range(self.team_numbers[i]):
+                if self.criterion == Criterion.SPD:
+                    self.team.add(ListItem(pokemon, pokemon.get_speed()))
+                elif self.criterion == Criterion.HP:
+                    self.team.add(ListItem(pokemon, pokemon.get_hp()))
+                elif self.criterion == Criterion.LV:
+                    self.team.add(ListItem(pokemon, pokemon.get_level()))
+                elif self.criterion == Criterion.DEF:
+                    self.team.add(ListItem(pokemon, pokemon.get_defence()))
 
     @classmethod
     def leaderboard_team(cls):
