@@ -196,6 +196,7 @@ class PokeTeam:
         elif self.battle_mode == 2: # ArraySortedList
             self.team = ArraySortedList(self.num_of_pokemons)
 
+
     def fill_team(self):
         pass
 
