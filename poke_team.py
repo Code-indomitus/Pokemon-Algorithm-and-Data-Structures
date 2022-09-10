@@ -37,6 +37,7 @@ class PokeTeam:
 
     def __init__(self, team_name: str, team_numbers: list[int], battle_mode: int, ai_type: PokeTeam.AI, criterion=None, criterion_value=None) -> None:
 
+
         if not type(team_name) == str:
             raise TypeError("A string is expected for Team Name.")
         if not type(battle_mode) == int:
