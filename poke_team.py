@@ -206,7 +206,8 @@ class PokeTeam:
         # TODO string implementation for battle mode 2
         elif self.battle_mode == 2:  # ArraySortedList
             for i in range(len(self.team)):
-                pokemon_str_list += str(self.team.__getitem__(i)) + ","
+                pokemon = self.team.__getitem__(i).value
+                pokemon_str_list += str(pokemon) + ","
 
         result += "[" + pokemon_str_list[0:-1] + "]"
         return result
