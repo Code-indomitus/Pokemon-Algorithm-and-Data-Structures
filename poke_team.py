@@ -1,6 +1,6 @@
 from __future__ import annotations
 from inspect import stack
-from sys import last_value
+# from sys import last_value
 
 
 """
@@ -89,13 +89,13 @@ class PokeTeam:
 
 
         for i in range(NUM_OF_RANDOMS):
-            random_number = RandomGen.random(0, team_size)
+            random_number = RandomGen.randint(0, team_size)
             random_team_numbers.add(ListItem(None,random_number))
 
         # array that stores the number of each pokemon
         team_numbers = []
         for i in range(0, len(random_team_numbers) - 1):
-            team_numbers.append(random_team_numbers.__getitem__(i+1) - random_team_numbers.__getitem__(i))
+            team_numbers.append(random_team_numbers.__getitem__(i+1).key - random_team_numbers.__getitem__(i).key)
 
         if ai_mode is None:
             ai_mode = PokeTeam.AI.RANDOM
@@ -141,6 +141,8 @@ class PokeTeam:
             pokemon = self.team.serve()
         elif self.battle_mode == 2:  # ArraySortedList
             pokemon = self.team.delete_at_index(0).value
+        
+        return pokemon
 
     # TODO implement special method for battle mode 2
     def special(self):
@@ -184,7 +186,7 @@ class PokeTeam:
 
         self.num_of_heals = 3
 
-    # TODO string implementation for battle mode 2
+    # FIXME string implementation for battle mode 2
     def __str__(self) -> str:
         result = self.team_name + " " + "(" + str(self.battle_mode) + ")" + ": "
 
@@ -203,7 +205,7 @@ class PokeTeam:
                 pokemon_str_list += str(pokemon) + ","
                 self.team.append(pokemon)
 
-        # TODO string implementation for battle mode 2
+        # FIXME string implementation for battle mode 2
         elif self.battle_mode == 2:  # ArraySortedList
             for i in range(len(self.team)):
                 pokemon = self.team.__getitem__(i).value
@@ -290,7 +292,7 @@ class PokeTeam:
             elif i == 4:
                 pokemon = Eevee()
 
-            for i in range(self.team_numbers[i]):
+            for j in range(self.team_numbers[i]):
                 self.team.append(pokemon)
 
     # FIXME if required
@@ -308,7 +310,7 @@ class PokeTeam:
             elif i == 4:
                 pokemon = Eevee()
 
-            for i in range(self.team_numbers[i]):
+            for j in range(self.team_numbers[i]):
                 if self.criterion == Criterion.SPD:
                     self.team.add(ListItem(pokemon, pokemon.get_speed()))
                 elif self.criterion == Criterion.HP:
