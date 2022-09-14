@@ -95,7 +95,7 @@ class PokeTeam:
         # array that stores the number of each pokemon
         team_numbers = []
         for i in range(0, len(random_team_numbers) - 1):
-            team_numbers.append(random_team_numbers.__getitem__(i+1).key - random_team_numbers.__getitem__(i).key)
+            team_numbers.append(random_team_numbers[i+1].key - random_team_numbers[i].key)
 
         if ai_mode is None:
             ai_mode = PokeTeam.AI.RANDOM
@@ -208,7 +208,7 @@ class PokeTeam:
         # FIXME string implementation for battle mode 2
         elif self.battle_mode == 2:  # ArraySortedList
             for i in range(len(self.team)):
-                pokemon = self.team.__getitem__(i).value
+                pokemon = self.team[i].value
                 pokemon_str_list += str(pokemon) + ","
 
         result += "[" + pokemon_str_list[0:-1] + "]"
