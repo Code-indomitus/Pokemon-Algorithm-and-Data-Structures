@@ -106,8 +106,8 @@ class PokemonBase(ABC, Generic[T]):
         pass
 
     def __str__(self) -> str:
-        pokemonString = "LV. " + str(self.level) + " " + self.get_poke_name() + ": " + str(self.hp) + " HP"
-        return pokemonString
+        pokemon_string = "LV. " + str(self.get_level()) + " " + self.get_poke_name() + ": " + str(self.hp) + " HP"
+        return pokemon_string
 
     @abstractmethod
     def should_evolve(self) -> bool:
@@ -198,4 +198,3 @@ class PokemonBase(ABC, Generic[T]):
             new_status = StatusEffect.CONFUSTION
         
         return new_status
-
