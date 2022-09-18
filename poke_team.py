@@ -177,7 +177,7 @@ class PokeTeam:
 
         # TODO implement special method for battle mode 2
         if self.battle_mode == 2:  # ArraySortedList
-            pass
+            self.team.reverse_order()
 
 
     def regenerate_team(self):
@@ -195,23 +195,23 @@ class PokeTeam:
         if self.battle_mode == 0:  # ArrayStack
             stack_length = len(self.team)
             for _ in range(stack_length):
-                pokemon_str_list += str(self.team.peek()) + ","
+                pokemon_str_list += str(self.team.peek()) + ", "
                 self.team.length -= 1
             self.team.length = stack_length
                 
         elif self.battle_mode == 1:  # CircularQueue
             for _ in range(len(self.team)):
                 pokemon = self.team.serve()
-                pokemon_str_list += str(pokemon) + ","
+                pokemon_str_list += str(pokemon) + ", "
                 self.team.append(pokemon)
 
         # FIXME string implementation for battle mode 2
         elif self.battle_mode == 2:  # ArraySortedList
             for i in range(len(self.team)):
                 pokemon = self.team[i].value
-                pokemon_str_list += str(pokemon) + ","
+                pokemon_str_list += str(pokemon) + ", "
 
-        result += "[" + pokemon_str_list[0:-1] + "]"
+        result += "[" + pokemon_str_list[0:-2] + "]"
         return result
 
     def is_empty(self):
@@ -258,6 +258,7 @@ class PokeTeam:
         elif self.battle_mode == 2: # ArraySortedList
             self.team = ArraySortedList(self.num_of_pokemons)
             self.fill_team_mode_two()
+            self.team.reverse_order()
 
     # FIXME if required
     def fill_team_mode_zero(self):
