@@ -65,7 +65,7 @@ class Charmander(PokemonBase):
 class Squirtle(PokemonBase):
     def __init__(self) -> None:
         self.level = 1
-        self.max_hp = 12 + (1 * self.level)
+        self.max_hp = 9 + (2 * self.level)
         PokemonBase.__init__(self, self.max_hp, PokeType.WATER)
     
     def level_up(self) -> None:
