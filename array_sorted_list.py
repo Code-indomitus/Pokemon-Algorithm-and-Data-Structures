@@ -5,6 +5,8 @@
 
 from referential_array import ArrayR
 from sorted_list import *
+from typing import TypeVar, Generic
+T = TypeVar('T')
 
 __author__ = 'Maria Garcia de la Banda and Brendon Taylor. Modified by Alexey Ignatiev and Graeme Gange'
 __docformat__ = 'reStructuredText'
@@ -22,16 +24,17 @@ class ArraySortedList(SortedList[T]):
         # initialising the internal array
         size = max(self.MIN_CAPACITY, max_capacity)
         self.array = ArrayR(size)
+        self.order = "increasing"
 
     def reset(self):
         """ Reset the list. """
         SortedList.__init__(self)
 
-    def __getitem__(self, index: int) -> T:
+    def __getitem__(self, index: int) -> ListItem:
         """ Magic method. Return the element at a given position. """
         return self.array[index]
 
-    def __setitem__(self, index: int, item: ListItem) -> None:
+    def __setitem__(self, index: int, item: T) -> None:
         """ Magic method. Insert the item at a given position,
             if possible (!). Shift the following elements to the right.
         """
@@ -100,6 +103,8 @@ class ArraySortedList(SortedList[T]):
 
     def add(self, item: ListItem) -> None:
         """ Add new element to the list. """
+        if self.order == "decreasing":
+            self.increasing_order()
         if self.is_full():
             self._resize()
 
@@ -109,8 +114,12 @@ class ArraySortedList(SortedList[T]):
         self[position] = item
         self.length += 1
 
+        if self.order == "decreasing":
+            self.decreasing_order()
+
     def _index_to_add(self, item: ListItem) -> int:
         """ Find the position where the new item should be placed. """
+
         low = 0
         high = len(self) - 1
 
@@ -124,3 +133,36 @@ class ArraySortedList(SortedList[T]):
                 return mid
 
         return low
+    
+    def reverse_order(self):
+        if self.order == "increasing":
+            self.order = "decreasing"
+            self.decreasing_order()
+        elif self.order == "decreasing":
+            self.order = "increasing"
+            self.increasing_order()
+
+    def increasing_order(self):
+        n = len(self)
+        for j in range(n - 1, 0, -1):
+            swapped = False
+            for i in range(j):
+                if self[i].key > self[i + 1].key:
+                    self.swap(i, i + 1)
+                    swapped = True
+            if not swapped:
+                break
+
+    def decreasing_order(self):
+        n = len(self)
+        for j in range(n - 1, 0, -1):
+            swapped = False
+            for i in range(j):
+                if self[i].key < self[i + 1].key:
+                    self.swap(i, i + 1)
+                    swapped = True
+            if not swapped:
+                break
+
+    def swap(self, i, j):
+        self.array[i], self.array[j] = self.array[j], self.array[i]
