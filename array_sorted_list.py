@@ -147,7 +147,7 @@ class ArraySortedList(SortedList[T]):
         for j in range(n - 1, 0, -1):
             swapped = False
             for i in range(j):
-                if self[i].key > self[i + 1].key:
+                if self[i].key >= self[i + 1].key:
                     self.swap(i, i + 1)
                     swapped = True
             if not swapped:
@@ -158,7 +158,7 @@ class ArraySortedList(SortedList[T]):
         for j in range(n - 1, 0, -1):
             swapped = False
             for i in range(j):
-                if self[i].key < self[i + 1].key:
+                if self[i].key <= self[i + 1].key:
                     self.swap(i, i + 1)
                     swapped = True
             if not swapped:
