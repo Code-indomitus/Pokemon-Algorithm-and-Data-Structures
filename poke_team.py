@@ -73,7 +73,7 @@ class PokeTeam:
         self.num_of_heals = 3
 
     @classmethod
-    def random_team(cls, team_name: str, battle_mode: int, team_size=None, ai_mode=None, **kwargs)-> PokeTeam:
+    def random_team(cls, team_name: str, battle_mode: int, team_size=None, ai_mode=None, criterion = None)-> PokeTeam:
 
         NUM_OF_RANDOMS = 4
 
@@ -111,25 +111,28 @@ class PokeTeam:
             # elif rand_num == 4:
             #     ai_mode = AI.USER_INPUT
 
-        random_team = PokeTeam(team_name,team_numbers,battle_mode,ai_mode)
+        random_team = PokeTeam(team_name,team_numbers,battle_mode,ai_mode, criterion = criterion)
 
         return random_team
 
     # FIXME If required
     def return_pokemon(self, pokemon: PokemonBase) -> None:
-        if self.battle_mode == 0: # ArrayStack
-            self.team.push(pokemon)
-        if self.battle_mode == 1: # CircularQueue
-            self.team.append(pokemon)
-        if self.battle_mode == 2: # ArraySortedList
-            if self.criterion == Criterion.SPD:
-                self.team.add(ListItem(pokemon, pokemon.get_speed()))
-            elif self.criterion == Criterion.HP:
-                self.team.add(ListItem(pokemon, pokemon.get_hp()))
-            elif self.criterion == Criterion.LV:
-                self.team.add(ListItem(pokemon, pokemon.get_level()))
-            elif self.criterion == Criterion.DEF:
-                self.team.add(ListItem(pokemon, pokemon.get_defence()))
+
+        if not pokemon.is_fainted():
+
+            if self.battle_mode == 0: # ArrayStack
+                self.team.push(pokemon)
+            elif self.battle_mode == 1: # CircularQueue
+                self.team.append(pokemon)
+            elif self.battle_mode == 2: # ArraySortedList
+                if self.criterion == Criterion.SPD:
+                    self.team.add(ListItem(pokemon, pokemon.get_speed()))
+                elif self.criterion == Criterion.HP:
+                    self.team.add(ListItem(pokemon, pokemon.get_hp()))
+                elif self.criterion == Criterion.LV:
+                    self.team.add(ListItem(pokemon, pokemon.get_level()))
+                elif self.criterion == Criterion.DEF:
+                    self.team.add(ListItem(pokemon, pokemon.get_defence()))
             
     # FIXME If required
     def retrieve_pokemon(self) -> PokemonBase | None:
@@ -181,9 +184,7 @@ class PokeTeam:
 
 
     def regenerate_team(self):
-        for pokemons in self.team:
-            pokemons.heal()
-
+        self.set_team()
         self.num_of_heals = 3
 
     # FIXME string implementation for battle mode 2
