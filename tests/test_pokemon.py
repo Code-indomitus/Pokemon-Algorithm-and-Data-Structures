@@ -21,3 +21,15 @@ class TestPokemon(BaseTest):
         v.lose_hp(5)
 
         self.assertEqual(str(v), "LV. 5 Venusaur: 17 HP")
+    
+    def test_haunter_stats(self):
+        pass
+
+    def test_charmander_stats(self):
+        pass
+
+    def test_gengar_stats(self):
+        pass
+
+    def test_eevee_stats(self):
+        pass
