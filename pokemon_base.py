@@ -198,3 +198,9 @@ class PokemonBase(ABC, Generic[T]):
             new_status = StatusEffect.CONFUSTION
         
         return new_status
+
+    def get_status_effect(self) -> StatusEffect:
+        return self.status
+
+    def set_status_effect(self, new_status_effect: StatusEffect):
+        self.status = new_status_effect
