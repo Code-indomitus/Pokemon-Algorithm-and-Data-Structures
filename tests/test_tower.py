@@ -16,7 +16,10 @@ class TestTower(BaseTest):
         results = [
             (1, 6),
             (1, 9),
-            (2, 10)
+            (1, 9),
+            (1, 2),
+            (1, 5),
+            (2, 9)
         ]
         it = iter(bt)
         for (expected_res, expected_lives), (res, me, tower, lives) in zip(results, it):
@@ -93,5 +96,3 @@ class TestTower(BaseTest):
         res, me, other_2, lives = next(it)
 
         self.assertEqual(str(other_1), str(other_2))
-
-
