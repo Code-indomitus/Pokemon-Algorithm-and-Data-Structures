@@ -59,6 +59,7 @@ class Charmander(PokemonBase):
     def get_evolved_version(self) -> PokemonBase:
         hp_difference = self.max_hp - self.hp
         charizard = Charizard()
+        charizard.set_status_effect(self.get_status_effect())
         charizard.lose_hp(hp_difference)
         return charizard
 
@@ -117,6 +118,7 @@ class Squirtle(PokemonBase):
     def get_evolved_version(self) -> PokemonBase:
         hp_difference = self.max_hp - self.hp
         blastoise = Blastoise()
+        blastoise.set_status_effect(self.get_status_effect())
         blastoise.lose_hp(hp_difference)
         return blastoise
 
@@ -175,6 +177,7 @@ class Bulbasaur(PokemonBase):
     def get_evolved_version(self) -> PokemonBase:
         hp_difference = self.max_hp - self.hp
         venusaur = Venusaur()
+        venusaur.set_status_effect(self.get_status_effect())
         venusaur.lose_hp(hp_difference)
         return venusaur
 
@@ -230,6 +233,7 @@ class Gastly(PokemonBase):
     def get_evolved_version(self) -> PokemonBase:
         hp_difference = self.max_hp - self.hp
         haunter = Haunter()
+        haunter.set_status_effect(self.get_status_effect())
         haunter.lose_hp(hp_difference)
         return haunter
 
@@ -497,6 +501,7 @@ class Haunter(PokemonBase):
     def get_evolved_version(self) -> PokemonBase:
         hp_difference = self.max_hp - self.hp
         gengar = Gengar()
+        gengar.set_status_effect(self.get_status_effect())
         gengar.lose_hp(hp_difference)
         return gengar
 
