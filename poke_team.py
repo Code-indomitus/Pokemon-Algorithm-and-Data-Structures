@@ -264,55 +264,54 @@ class PokeTeam:
     # FIXME if required
     def fill_team_mode_zero(self):
         for i in range(len(self.team_numbers)-1,-1,-1):
-            pokemon = None
-            if i == 0:
-                pokemon = Charmander()
-            elif i == 1:
-                pokemon = Bulbasaur()
-            elif i == 2:
-                pokemon = Squirtle()
-            elif i == 3:
-                pokemon = Gastly()
-            elif i == 4:
-                pokemon = Eevee()
 
-            for i in range(self.team_numbers[i]):
+            for j in range(self.team_numbers[i]):
+                
+                if i == 0:
+                    pokemon = Charmander()
+                elif i == 1:
+                    pokemon = Bulbasaur()
+                elif i == 2:
+                    pokemon = Squirtle()
+                elif i == 3:
+                    pokemon = Gastly()
+                elif i == 4:
+                    pokemon = Eevee()
                 self.team.push(pokemon)
 
     # FIXME if required
     def fill_team_mode_one(self):
         for i in range(len(self.team_numbers)):
-            pokemon = None
-            if i == 0:
-                pokemon = Charmander()
-            elif i == 1:
-                pokemon = Bulbasaur()
-            elif i == 2:
-                pokemon = Squirtle()
-            elif i == 3:
-                pokemon = Gastly()
-            elif i == 4:
-                pokemon = Eevee()
 
             for j in range(self.team_numbers[i]):
+                if i == 0:
+                    pokemon = Charmander()
+                elif i == 1:
+                    pokemon = Bulbasaur()
+                elif i == 2:
+                    pokemon = Squirtle()
+                elif i == 3:
+                    pokemon = Gastly()
+                elif i == 4:
+                    pokemon = Eevee()
                 self.team.append(pokemon)
 
     # FIXME if required
     def fill_team_mode_two(self):
         for i in range(len(self.team_numbers)):
-            pokemon = None
-            if i == 0:
-                pokemon = Charmander()
-            elif i == 1:
-                pokemon = Bulbasaur()
-            elif i == 2:
-                pokemon = Squirtle()
-            elif i == 3:
-                pokemon = Gastly()
-            elif i == 4:
-                pokemon = Eevee()
 
             for j in range(self.team_numbers[i]):
+                if i == 0:
+                    pokemon = Charmander()
+                elif i == 1:
+                    pokemon = Bulbasaur()
+                elif i == 2:
+                    pokemon = Squirtle()
+                elif i == 3:
+                    pokemon = Gastly()
+                elif i == 4:
+                    pokemon = Eevee()
+                    
                 if self.criterion == Criterion.SPD:
                     self.team.add(ListItem(pokemon, pokemon.get_speed()))
                 elif self.criterion == Criterion.HP:
