@@ -6,8 +6,8 @@ __author__ = "Scaffold by Jackson Goerner, Code by ______________"
 class Charmander(PokemonBase):
     def __init__(self) -> None:
         self.level = 1
-        self.max_hp = 8 + (1 * self.level)
-        PokemonBase.__init__(self, self.max_hp, PokeType.FIRE)
+        self.start_hp = 8 + (1 * self.level)
+        PokemonBase.__init__(self, self.start_hp, PokeType.FIRE)
     
     def level_up(self) -> None:
         self.level += 1
@@ -66,12 +66,12 @@ class Charmander(PokemonBase):
 class Squirtle(PokemonBase):
     def __init__(self) -> None:
         self.level = 1
-        self.max_hp = 9 + (2 * self.level)
-        PokemonBase.__init__(self, self.max_hp, PokeType.WATER)
+        self.start_hp = 9 + (2 * self.level)
+        PokemonBase.__init__(self, self.start_hp, PokeType.WATER)
     
     def level_up(self) -> None:
         self.level += 1
-        new_max = 12 + (1 * self.level)
+        new_max = 9 + (2 * self.level)
         self.hp = new_max - (self.max_hp - self.hp)
         self.max_hp = new_max
     
@@ -125,8 +125,8 @@ class Squirtle(PokemonBase):
 class Bulbasaur(PokemonBase):
     def __init__(self) -> None:
         self.level = 1
-        self.max_hp = 12 + (1 * self.level)
-        PokemonBase.__init__(self, self.max_hp, PokeType.GRASS)
+        self.start_hp = 12 + (1 * self.level)
+        PokemonBase.__init__(self, self.start_hp, PokeType.GRASS)
     
     def level_up(self) -> None:
         self.level += 1
@@ -184,8 +184,8 @@ class Bulbasaur(PokemonBase):
 class Gastly(PokemonBase):
     def __init__(self) -> None:
         self.level = 1
-        self.max_hp = 6 + (self.level // 2)
-        PokemonBase.__init__(self, self.max_hp, PokeType.GHOST)
+        self.start_hp = 6 + (self.level // 2)
+        PokemonBase.__init__(self, self.start_hp, PokeType.GHOST)
     
     def level_up(self) -> None:
         self.level += 1
@@ -197,7 +197,7 @@ class Gastly(PokemonBase):
         return self.level
 
     def get_speed(self) -> int:
-        speed = 7 + (self.level // 2) 
+        speed = 2
         if self.status.value == "Paralysis":
             speed = speed * 0.5 # speed is halved
         return speed
@@ -240,8 +240,8 @@ class Gastly(PokemonBase):
 class Eevee(PokemonBase):
     def __init__(self) -> None:
         self.level = 1
-        self.max_hp = 10
-        PokemonBase.__init__(self, self.max_hp, PokeType.NORMAL)
+        self.start_hp = 10
+        PokemonBase.__init__(self, self.start_hp, PokeType.NORMAL)
     
     def level_up(self) -> None:
         self.level += 1
@@ -293,8 +293,8 @@ class Eevee(PokemonBase):
 class Charizard(PokemonBase):
     def __init__(self) -> None:
         self.level = 3
-        self.max_hp = 12 + (1 * self.level)
-        PokemonBase.__init__(self, self.max_hp, PokeType.FIRE)
+        self.start_hp = 12 + (1 * self.level)
+        PokemonBase.__init__(self, self.start_hp, PokeType.FIRE)
     
     def level_up(self) -> None:
         self.level += 1
@@ -346,8 +346,8 @@ class Charizard(PokemonBase):
 class Blastoise(PokemonBase):
     def __init__(self) -> None:
         self.level = 3
-        self.max_hp = 15 + (2 * self.level)
-        PokemonBase.__init__(self, self.max_hp, PokeType.WATER)
+        self.start_hp = 15 + (2 * self.level)
+        PokemonBase.__init__(self, self.start_hp, PokeType.WATER)
     
     def level_up(self) -> None:
         self.level += 1
@@ -399,8 +399,8 @@ class Blastoise(PokemonBase):
 class Venusaur(PokemonBase):
     def __init__(self) -> None:
         self.level = 2
-        self.max_hp = 20 + (self.level // 2)
-        PokemonBase.__init__(self, self.max_hp, PokeType.GRASS)
+        self.start_hp = 20 + (self.level // 2)
+        PokemonBase.__init__(self, self.start_hp, PokeType.GRASS)
     
     def level_up(self) -> None:
         self.level += 1
@@ -452,8 +452,8 @@ class Venusaur(PokemonBase):
 class Haunter(PokemonBase):
     def __init__(self) -> None:
         self.level = 1
-        self.max_hp = 9 + (self.level // 2)
-        PokemonBase.__init__(self, self.max_hp, PokeType.GHOST)
+        self.start_hp = 9 + (self.level // 2)
+        PokemonBase.__init__(self, self.start_hp, PokeType.GHOST)
     
     def level_up(self) -> None:
         self.level += 1
@@ -508,8 +508,8 @@ class Haunter(PokemonBase):
 class Gengar(PokemonBase):
     def __init__(self) -> None:
         self.level = 3
-        self.max_hp = 12 + (self.level // 2)
-        PokemonBase.__init__(self, self.max_hp, PokeType.GHOST)
+        self.start_hp = 12 + (self.level // 2)
+        PokemonBase.__init__(self, self.start_hp, PokeType.GHOST)
     
     def level_up(self) -> None:
         self.level += 1
