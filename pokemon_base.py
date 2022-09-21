@@ -35,7 +35,7 @@ class PokemonBase(ABC, Generic[T]):
         self.hp = hp
         self.poke_type = poke_type
         self.status = StatusEffect.NONE
-        self.max = self.hp
+        self.max_hp = self.hp
 
     def is_fainted(self) -> bool:
         if self.hp <= 0:
@@ -47,7 +47,7 @@ class PokemonBase(ABC, Generic[T]):
         return self.hp
     
     def heal(self):
-        self.hp = self.max
+        self.hp = self.max_hp
         self.status = StatusEffect.NONE
     
     @abstractmethod
