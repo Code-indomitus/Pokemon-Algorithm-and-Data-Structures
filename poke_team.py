@@ -320,6 +320,9 @@ class PokeTeam:
                     self.team.add(ListItem(pokemon, pokemon.get_level()))
                 elif self.criterion == Criterion.DEF:
                     self.team.add(ListItem(pokemon, pokemon.get_defence()))
+    
+    def get_team_numbers(self):
+        return self.team_numbers
 
     @classmethod
     def leaderboard_team(cls):
