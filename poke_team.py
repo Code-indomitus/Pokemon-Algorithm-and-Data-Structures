@@ -15,6 +15,7 @@ from array_sorted_list import ArraySortedList
 from queue_adt import CircularQueue
 from stack_adt import  ArrayStack
 from sorted_list import ListItem
+from pokemon_base import StatusEffect
 
 
 
@@ -119,6 +120,7 @@ class PokeTeam:
     def return_pokemon(self, pokemon: PokemonBase) -> None:
 
         if not pokemon.is_fainted():
+            pokemon.set_status_effect(StatusEffect.NONE)
 
             if self.battle_mode == 0: # ArrayStack
                 self.team.push(pokemon)
