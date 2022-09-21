@@ -83,23 +83,26 @@ class PokemonBase(ABC, Generic[T]):
         # Step 2: Do the attack
         # Step 3: Losing hp to status effects
         # Step 4: Possibly applying status effects
-
+        newa = None
         if self.status.value == "Sleep":
             return 
     
         if self.status.value == "Confusion" and RandomGen.random_chance(0.5):
             other = self
-        
+
         effective_attack = self.get_attack_damage() * self.get_effective_multiplier(other)
+        effective_attack =  int (effective_attack)
         defence_calculation = other.defend(effective_attack)
         other.lose_hp(defence_calculation)
 
+        if self.status.value == "Burn":
+            self.lose_hp(1)
+        elif self.status.value == "Poison":
+            self.lose_hp(3)
+
         if RandomGen.random_chance(0.2):
             other.status = self.get_inflict_status()
-            if other.status.value == "Burn":
-                other.lose_hp(1)
-            elif other.status.value == "Poison":
-                other.lose_hp(3)
+            
 
     @abstractmethod
     def get_poke_name(self) -> str:
@@ -122,6 +125,8 @@ class PokemonBase(ABC, Generic[T]):
         pass
 
     def get_effective_multiplier(self, other: PokemonBase) -> float:
+        multiplier = 1 #setting default to 1
+
         if self.poke_type.value == "Fire":
             if other.poke_type.value == "Fire":
                 multiplier = 1
@@ -184,7 +189,10 @@ class PokemonBase(ABC, Generic[T]):
 
         return multiplier
 
+
     def get_inflict_status(self) -> StatusEffect:
+
+        new_status = StatusEffect.NONE
 
         if self.poke_type.value == "Fire":
             new_status = StatusEffect.BURN
