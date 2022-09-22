@@ -22,6 +22,7 @@ class Charmander(PokemonBase):
         speed = 7 + (1 * self.level)
         if self.status.value == "Paralysis":
             speed = speed * 0.5 # speed is halved
+        speed = int (speed)
         return speed
 
     def get_attack_damage(self) -> int:
@@ -82,6 +83,7 @@ class Squirtle(PokemonBase):
         speed = 7 
         if self.status.value == "Paralysis":
             speed = speed * 0.5 # speed is halved
+        speed = int (speed)
         return speed
 
     def get_attack_damage(self) -> int:
@@ -141,6 +143,7 @@ class Bulbasaur(PokemonBase):
         speed = 7 + (self.level // 2) 
         if self.status.value == "Paralysis":
             speed = speed * 0.5 # speed is halved
+        speed = int (speed)
         return speed
 
     def get_attack_damage(self) -> int:
@@ -200,6 +203,7 @@ class Gastly(PokemonBase):
         speed = 2
         if self.status.value == "Paralysis":
             speed = speed * 0.5 # speed is halved
+        speed = int (speed)
         return speed
 
     def get_attack_damage(self) -> int:
@@ -256,6 +260,7 @@ class Eevee(PokemonBase):
         speed = 7 + self.level
         if self.status.value == "Paralysis":
             speed = speed * 0.5 # speed is halved
+        speed = int (speed)
         return speed
 
     def get_attack_damage(self) -> int:
@@ -309,6 +314,7 @@ class Charizard(PokemonBase):
         speed = 9 + (1 * self.level)
         if self.status.value == "Paralysis":
             speed = speed * 0.5 # speed is halved
+        speed = int (speed)
         return speed
 
     def get_attack_damage(self) -> int:
@@ -362,6 +368,7 @@ class Blastoise(PokemonBase):
         speed = 10
         if self.status.value == "Paralysis":
             speed = speed * 0.5 # speed is halved
+        speed = int (speed)
         return speed
 
     def get_attack_damage(self) -> int:
@@ -415,6 +422,7 @@ class Venusaur(PokemonBase):
         speed = 3 + (self.level // 2)
         if self.status.value == "Paralysis":
             speed = speed * 0.5 # speed is halved
+        speed = int (speed)
         return speed
 
     def get_attack_damage(self) -> int:
@@ -468,6 +476,7 @@ class Haunter(PokemonBase):
         speed = 6
         if self.status.value == "Paralysis":
             speed = speed * 0.5 # speed is halved
+        speed = int (speed)
         return speed
 
     def get_attack_damage(self) -> int:
@@ -524,6 +533,7 @@ class Gengar(PokemonBase):
         speed = 12
         if self.status.value == "Paralysis":
             speed = speed * 0.5 # speed is halved
+        speed = int (speed)
         return speed
 
     def get_attack_damage(self) -> int:
