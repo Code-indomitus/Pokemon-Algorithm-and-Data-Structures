@@ -1,6 +1,6 @@
 from random_gen import RandomGen
-from pokemon_base import PokemonBase, PokeType
-from pokemon import Eevee, Gastly, Haunter
+from pokemon_base import PokemonBase, PokeType, StatusEffect
+from pokemon import Blastoise, Bulbasaur, Charmander, Eevee, Gastly, Gengar, Haunter, Squirtle, Venusaur
 from tests.base_test import BaseTest
 
 class TestPokemonBase(BaseTest):
@@ -41,24 +41,62 @@ class TestPokemonBase(BaseTest):
         self.assertIsInstance(new_g, Haunter)
 
     def test_is_fainted(self):
-        pass
+        g = Gastly() # hp = 6
 
-    def test_speed(self):
-        pass
+        self.assertEqual(g.get_hp(), 6)
 
-    def test_defence(self):
-        pass
+        g.lose_hp(5)
+        self.assertEqual(g.get_hp(), 1)
+        g.level_up()
+        self.assertEqual(g.get_hp(), 2)
+        g.heal()
+        self.assertEqual(g.get_hp(), 7)
 
-    def test_attack_damage(self):
-        pass
+        g.lose_hp(8)
+        self.assertEqual(g.is_fainted(), True)
 
     def test_attack(self):
         pass
 
     def test_multiplier(self):
-        pass
+        b = Bulbasaur()
+        c = Charmander()
+        s = Squirtle()
+        e = Eevee()
+        g  = Gastly()
+
+        self.assertEqual(b.get_effective_multiplier(c), 0.5)
+        self.assertEqual(c.get_effective_multiplier(b), 2)
+        self.assertEqual(s.get_effective_multiplier(c), 2)
+        self.assertEqual(b.get_effective_multiplier(s), 2)
+        self.assertEqual(c.get_effective_multiplier(s), 0.5)
+        self.assertEqual(e.get_effective_multiplier(g), 0)
+        self.assertEqual(e.get_effective_multiplier(c), 1.25)
 
     def test_status(self):
-        pass
+        b = Bulbasaur()
+        c = Charmander()
+        s = Squirtle()
+        e = Eevee()
+        g  = Gastly()
+
+        self.assertEqual(b.get_inflict_status(), StatusEffect.POISON)
+        self.assertEqual(c.get_inflict_status(), StatusEffect.BURN)
+        self.assertEqual(s.get_inflict_status(), StatusEffect.PARALYSIS)
+        self.assertEqual(e.get_inflict_status(), StatusEffect.CONFUSTION)
+        self.assertEqual(g.get_inflict_status(), StatusEffect.SLEEP)
+    
+    def test_pokemon_str(self):
+        h  = Haunter()
+        g = Gengar()
+        b = Blastoise()
+
+        h.level_up()
+        g.level_up()
+        g.level_up()
+
+        self.assertEqual(str(h), "LV. 2 Haunter: 10 HP")
+        self.assertEqual(str(g), "LV. 5 Gengar: 14 HP")
+        self.assertEqual(str(b), "LV. 3 Blastoise: 21 HP")
 
 
