@@ -36,6 +36,8 @@ class PokemonBase(ABC, Generic[T]):
 
     def __init__(self, hp: int, poke_type: PokeType) -> None:
         """ Initialises the pokemon object with its attributes
+        :param hp: the starting hp of the pokemon
+        :param poke_type: the type of the pokemon
         :pre: hp must be greater than zero
         :complexity: Best and worst case complexity is O(1)
         """
@@ -104,7 +106,9 @@ class PokemonBase(ABC, Generic[T]):
 
     @abstractmethod
     def defend(self, damage: int) -> None:
-        """ Carries out the defense mechanism of the pokemon"""
+        """ Carries out the defense mechanism of the pokemon
+        :param damage: the damage that opponent pokemon can inflict
+        """
         pass      
 
     def attack(self, other: PokemonBase):
