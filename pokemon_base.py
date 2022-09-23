@@ -39,6 +39,7 @@ class PokemonBase(ABC, Generic[T]):
         :param hp: the starting hp of the pokemon
         :param poke_type: the type of the pokemon
         :pre: hp must be greater than zero
+        :raises ValueError: if hp not greater than zero
         :complexity: Best and worst case complexity is O(1)
         """
         if hp <= 0:
