@@ -152,21 +152,23 @@ class PokeTeam:
     # TODO implement special method for battle mode 2
     def special(self):
         if self.battle_mode == 0:  # ArrayStack
-            temp_stack = ArrayStack(len(self.team) - 2)
+            if len(self.team) > 1:
 
-            first_pokemon = self.team.pop()
+                temp_stack = ArrayStack(len(self.team) - 2)
 
-            while len(self.team) > 1:
-                temp_stack.push(self.team.pop())
-            
-            last_pokemon =self.team.pop()
+                first_pokemon = self.team.pop()
 
-            self.team.push(first_pokemon)
+                while len(self.team) > 1:
+                    temp_stack.push(self.team.pop())
+                
+                last_pokemon =self.team.pop()
 
-            while len(temp_stack) > 0:
-                self.team.push(temp_stack.pop())
-            
-            self.team.push(last_pokemon)
+                self.team.push(first_pokemon)
+
+                while len(temp_stack) > 0:
+                    self.team.push(temp_stack.pop())
+                
+                self.team.push(last_pokemon)
 
 
         if self.battle_mode == 1:  # CircularQueue
