@@ -227,7 +227,7 @@ class PokeTeam:
         if self.ai_type == PokeTeam.AI.ALWAYS_ATTACK:
             action = Action.ATTACK
         elif self.ai_type == PokeTeam.AI.SWAP_ON_SUPER_EFFECTIVE:  # UNCLEAR
-            if their_pokemon.get_attack_damage() * their_pokemon.get_effective_multiplier(my_pokemon) >= 1.5 * my_pokemon.get_attack_damage():
+            if their_pokemon.get_attack_damage() * their_pokemon.get_effective_multiplier(my_pokemon) >= 1.5 * their_pokemon.get_attack_damage():
                 action = Action.SWAP
             else:
                 action = Action.ATTACK
