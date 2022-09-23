@@ -56,7 +56,25 @@ class TestPokemonBase(BaseTest):
         self.assertEqual(g.is_fainted(), True)
 
     def test_attack(self):
-        pass
+        RandomGen.set_seed(10)
+
+        c = Charmander()
+        b = Bulbasaur()
+        s = Squirtle()
+        g = Gastly()
+
+        c.attack(s)
+        self.assertEqual(s.get_hp(), 10)
+        self.assertEqual(s.get_status_effect(), StatusEffect.BURN)
+
+        c.attack(b)
+        self.assertEqual(b.get_hp(), -1)
+        self.assertEqual(b.get_status_effect(), StatusEffect.NONE)
+
+        g.attack(c)
+        self.assertEqual(c.get_hp(), 4)
+        self.assertEqual(c.get_status_effect(), StatusEffect.NONE)
+
 
     def test_multiplier(self):
         b = Bulbasaur()
