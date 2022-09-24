@@ -1,7 +1,7 @@
 """
 """
 from pokemon_base import PokemonBase, StatusEffect, PokeType
-__author__ = "Scaffold by Jackson Goerner, Code by ______________"
+__author__ = "Scaffold by Jackson Goerner, Code by Jun Yu Tan, Shyam Kamalesh Borkar, Rachit Bhatia and Jobin Dan"
    
 class Charmander(PokemonBase):
     def __init__(self) -> None:
