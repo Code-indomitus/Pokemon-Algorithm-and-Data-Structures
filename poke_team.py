@@ -106,22 +106,22 @@ class PokeTeam:
                      P is the complexity of creating a poketeam.
         """
 
-        NUM_OF_RANDOMS = 4
-
-        if team_size is None:
-            lo = 6//2
-            hi = 6
-            team_size = RandomGen.randint(lo, hi)
+        if team_size == None:
+            team_size = RandomGen.randint(3, 6)
 
         random_team_numbers = ArraySortedList(6)
-
         random_team_numbers.add(ListItem(None,0))
         random_team_numbers.add(ListItem(None, team_size))
 
+        first_random = RandomGen.randint(0, team_size)
+        second_random = RandomGen.randint(0, team_size)
+        third_random = RandomGen.randint(0, team_size)
+        fourth_random = RandomGen.randint(0, team_size)
 
-        for i in range(NUM_OF_RANDOMS):
-            random_number = RandomGen.randint(0, team_size)
-            random_team_numbers.add(ListItem(None,random_number))
+        random_team_numbers.add(ListItem(None,first_random))
+        random_team_numbers.add(ListItem(None,second_random))
+        random_team_numbers.add(ListItem(None,third_random))
+        random_team_numbers.add(ListItem(None,fourth_random))
 
         # array that stores the number of each pokemon
         team_numbers = []
