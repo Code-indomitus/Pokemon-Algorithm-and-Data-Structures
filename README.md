@@ -20,19 +20,19 @@ Template Repository for use in Assignment 2 - REPLACE
 - [ ] Task 6
 
 ## Carry out Testing!
-- [ ] Task 1
-- [ ] Task 2
-- [ ] Task 3
+- [x] Task 1
+- [x] Task 2
+- [x] Task 3
 - [ ] Task 4
 - [ ] Task 5
 - [ ] Task 6
 
 ## Complete Documentation!
-- [ ] Task 1
+- [x] Task 1
 - [ ] Task 2
-- [ ] Task 3
+- [x] Task 3
 - [ ] Task 4
-- [ ] Task 5
+- [x] Task 5
 - [ ] Task 6
 
 
