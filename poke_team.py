@@ -5,7 +5,8 @@ from inspect import stack
 
 """
 """
-__author__ = "Scaffold by Jackson Goerner, Code by ______________"
+__author__ = "Scaffold by Jackson Goerner, Code by Jun Yu Tan and Shyam Kamalesh Borkar."
+
 
 from enum import Enum, auto
 from pokemon_base import PokemonBase
@@ -57,7 +58,8 @@ class PokeTeam:
         :raises ValueError: if battle_mode is not 1, 2 or 3
         :raises Exception: if criterion is not specified for battle_mode 2
 
-        :complexity: #TODO
+        :complexity: Best and worst case complexity is O(S) where S is the complexity
+        of set_team()
         """
 
         if not type(team_name) == str:
@@ -100,7 +102,8 @@ class PokeTeam:
         :param ai_type: the AI mode that the team will follow
         :param criterion: the criteria in which team in battle mode 2 is sorted
 
-        :complexity: #TODO
+        :complexity: Best and worst case is O(n + P) where n is the lenght of random_team_numbers and
+                     P is the complexity of creating a poketeam.
         """
 
         NUM_OF_RANDOMS = 4
@@ -135,7 +138,8 @@ class PokeTeam:
     def return_pokemon(self, pokemon: PokemonBase) -> None:
         """ returns a pokemon back into the team according to the team's battle mode
         :param pokemon: the pokemon to be returned back to the team
-        :complexity: #TODO
+        :complexity: Best case complexity is O(1) for battle mode 0 and 1 (Stack and Cricular Queue).
+        Worst case complexity is O(n) where n is the current lenght of the Array Sorted List (for battle mode 2).
         """
 
         if not pokemon.is_fainted():
@@ -157,7 +161,9 @@ class PokeTeam:
             
     def retrieve_pokemon(self) -> PokemonBase | None:
         """ retrieves a pokemon from the team according to the team's battle mode
-        :complexity: #TODO
+        :complexity: Best case complexity of O(1) for battle mode 0 and 1.
+        Worst case complexity of O(m) where m is the length of the array
+        sorted list after removing the first element.
         """
         if self.is_empty():
             pokemon = None
@@ -172,7 +178,10 @@ class PokeTeam:
 
     def special(self) -> None:
         """ carries out a special operation on the pokemon team based on the battle mode
-        :complexity: #TODO
+        :complexity: Battle Mode 0 - Best and worst is O(n) where n is the length of the stack
+                     Battle Mode 1 - Best and worst is O(n) where n is the lenght of the queue
+                     Battle Mode 2 - Best is O(1) when the list is already sorted or the first iteration produces sorting result (Bubble sort)
+                                     Worst is O(n^2) where n is the length of the list (Bubble sort)
         """
         if self.battle_mode == 0:  # ArrayStack
             if len(self.team) > 1:
@@ -211,14 +220,17 @@ class PokeTeam:
 
     def regenerate_team(self) -> None:        
         """ regenerates the team by building the team back from the team numbers
-        :complexity: #TODO
+        :complexity: Best and worst case complexity is O(S) where S is the complexity
+        of set_team()
         """
         self.set_team()
         self.num_of_heals = 3
 
     def __str__(self) -> str:
         """ magic method that produces the string version of the pokemon team
-        :complexity: #TODO
+        :complexity: Battle Mode 0 - Best and worst is O(n) where n is the length of the stack
+                     Battle Mode 1 - Best and worst is O(n) where n is the lenght of the queue
+                     Battle Mode 2 - Best and worst is O(n) where n is the lenght of the array sorted list
         """
         result = self.team_name + " " + "(" + str(self.battle_mode) + ")" + ": "
 
@@ -287,7 +299,11 @@ class PokeTeam:
 
     def set_team(self) -> None:
         """ Set up the pokemon team by calling the appopriate fill team modes for the 3 battle modes
-        :complexity: #TODO
+        :complexity: Battle Mode 0 - Best and worst is O(f0) where f0 is the complexity of fill_team_mode_zero()
+                     Battle Mode 1 - Best and worst is O(f1) where f1 is the complexity of fill_team_mode_one()
+                     Battle Mode 2 - Best case complexity is O(f2) where f2 is the complexity of fill_team_mode_two()
+                                     Worst case complexity is O(f2 + n^2) where f2 is the complexity of fill_team_mode_two() and
+                                     n is the length of the array sorted list for battle mode 2
         """
         if self.battle_mode == 0: # ArrayStack
             self.team = ArrayStack(self.num_of_pokemons)
@@ -302,7 +318,8 @@ class PokeTeam:
 
     def fill_team_mode_zero(self) -> None:
         """ fills up the pokemon team according to battle mode zero
-        :complexity: #TODO
+        :complexity: Best and worst case complexity is O(n*m) where n is the lenght of the team/stack and
+        m is the length of the team numbers
         """
 
         for i in range(len(self.team_numbers)-1,-1,-1):
@@ -323,7 +340,8 @@ class PokeTeam:
 
     def fill_team_mode_one(self):
         """ fills up the pokemon team according to battle mode one
-        :complexity: #TODO
+        :complexity: Best and worst case complexity is O(n*m) where n is the lenght of the team/queue and
+        m is the length of the team numbers
         """
 
         for i in range(len(self.team_numbers)):
@@ -343,7 +361,8 @@ class PokeTeam:
 
     def fill_team_mode_two(self):
         """ fills up the pokemon team according to battle mode two
-        :complexity: #TODO
+        :complexity: Best and worst case complexity is O(n*m) where n is the lenght of the team/sorted list and
+        m is the length of the team numbers
         """
 
         for i in range(len(self.team_numbers)):
