@@ -49,7 +49,7 @@ class Charmander(PokemonBase):
     
     def should_evolve(self) -> bool:
         should_evolve = False
-        if self.level == 3:
+        if self.level >= 3:
             should_evolve = True
         return should_evolve
 
@@ -109,7 +109,7 @@ class Squirtle(PokemonBase):
     
     def should_evolve(self) -> bool:
         should_evolve = False
-        if self.level == 3:
+        if self.level >= 3:
             should_evolve = True
         return should_evolve
 
@@ -169,7 +169,7 @@ class Bulbasaur(PokemonBase):
     
     def should_evolve(self) -> bool:
         should_evolve = False
-        if self.level == 2:
+        if self.level >= 2:
             should_evolve = True
         return should_evolve
 
@@ -226,7 +226,7 @@ class Gastly(PokemonBase):
     
     def should_evolve(self) -> bool:
         should_evolve = False
-        if self.level == 1:
+        if self.level >= 1:
             should_evolve = True
         return should_evolve
 
