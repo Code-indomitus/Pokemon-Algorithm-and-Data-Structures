@@ -338,7 +338,7 @@ class PokeTeam:
                     pokemon = Eevee()
                 self.team.push(pokemon)
 
-    def fill_team_mode_one(self):
+    def fill_team_mode_one(self) -> None:
         """ fills up the pokemon team according to battle mode one
         :complexity: Best and worst case complexity is O(n*m) where n is the lenght of the team/queue and
         m is the length of the team numbers
@@ -359,7 +359,7 @@ class PokeTeam:
                     pokemon = Eevee()
                 self.team.append(pokemon)
 
-    def fill_team_mode_two(self):
+    def fill_team_mode_two(self) -> None:
         """ fills up the pokemon team according to battle mode two
         :complexity: Best and worst case complexity is O(n*m) where n is the lenght of the team/sorted list and
         m is the length of the team numbers
@@ -388,7 +388,7 @@ class PokeTeam:
                 elif self.criterion == Criterion.DEF:
                     self.team.add(ListItem(pokemon, pokemon.get_defence()))
     
-    def get_team_numbers(self):
+    def get_team_numbers(self) -> list[int]:
         """ return the team numbers (list)
         :complexity: Best and worst case complexity is O(1)
         """
