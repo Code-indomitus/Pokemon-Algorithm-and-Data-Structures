@@ -1,4 +1,6 @@
 from __future__ import annotations
+from curses.ascii import BS
+from bset import BSet
 
 from stack_adt import ArrayStack
 
@@ -14,6 +16,7 @@ from battle import Battle
 class Tournament:
     
     def __init__(self, battle: Battle|None=None) -> None:
+        '''Constructor for the Tournament class'''
         self.teams = None
         self.battle_mode = None
         self.tournament_list = LinkedList()
@@ -24,10 +27,16 @@ class Tournament:
             self.battle = battle
 
     def set_battle_mode(self, battle_mode: int) -> None:
+        '''Set the battle mode that will be used for all random teams generated 
+        later on for the tournamnent
+        :complexity: O(1)
+        '''
         self.battle_mode = battle_mode
 
     def is_valid_tournament(self, tournament_str: str) -> bool:
-        
+        '''Checks if the tournament string input represents a valid tournament . Return 
+        True if valid, False otherwise.
+        :complexity: O(N*Index) where N is the size of the input '''
         str_split_postfix = tournament_str.split()
         postfix_operands = LinkedList()
         s = LinkedList()
@@ -65,7 +74,12 @@ class Tournament:
         raise NotImplementedError()
 
     def start_tournament(self, tournament_str: str) -> None:
-        
+        '''Start a valid tournament by generating random PokeTeams with the names following
+        the tournament str (postfix) given 
+        :raises TypeError : if the input is not of a string type
+        :complexity : O(N*(Index) + M*Index + N*M*(Index))
+        where N is the size of input tournament str
+        where M is the size of the team_names or self.teams'''      
         if not type(tournament_str) == str :
             raise TypeError("A string is expected for tournament_str")
 
@@ -93,19 +107,27 @@ class Tournament:
 
     
     def advance_tournament(self) -> tuple[PokeTeam, PokeTeam, int] | None:
-        index = self.tournament_list.index("+")
-        poketeam1 = self.tournament_list[index-2]
-        poketeam2 = self.tournament_list[index-1]
-        result = self.battle.battle(poketeam1,poketeam2)
+        '''Simulates one battle of the tournament, following the order of the previously given
+        tournament string
+        :complexity: O(B + P + Index)'''
+        try: 
+            index = self.tournament_list.index("+")
+        except ValueError: 
+            return None
+        else:
+            poketeam1 = self.tournament_list[index-2]
+            poketeam2 = self.tournament_list[index-1]
+            result = self.battle.battle(poketeam1,poketeam2)
 
-        if result == 1 :
-            self.tournament_list.delete_at_index(index)
-            self.tournament_list.remove(poketeam2)
-        elif result == 2:
-            self.tournament_list.delete_at_index(index)
-            self.tournament_list.remove(poketeam1)
+            if result == 1 :
+                self.tournament_list.delete_at_index(index)
+                self.tournament_list.remove(poketeam2)
+            elif result == 2:
+                self.tournament_list.delete_at_index(index)
+                self.tournament_list.remove(poketeam1)
 
-        return (poketeam1,poketeam2,result)
+            return (poketeam1,poketeam2,result)
+
 
 
     def linked_list_of_games(self) -> LinkedList[tuple[PokeTeam, PokeTeam]]:
@@ -118,14 +140,73 @@ class Tournament:
         return l
     
     def linked_list_with_metas(self) -> LinkedList[tuple[PokeTeam, PokeTeam, list[str]]]:
+        '''Seach for poketypes of pokemons that are not present in both the teams in the current battle but exist in the 
+        poketeams that have lost before them in the tournament.
+        :complexity: O(M * P) where M is the total number of matches played 
+                              where P is the limit on the number of pokemon per team '''
         l = LinkedList()
+        poketype_present_team_lost = BSet()
         while True:
             res = self.advance_tournament()
             if res is None:
                 break
+
+            poketype_not_present_both_teams = BSet()
             
-            
-            l.insert(0, (res[0], res[1],res[2]))
+            list_str = []
+
+            for i in range(res[0].team_numbers):
+                if res[0].team_numbers[i] == 0 and res[1].team_numbers[i] == 0:
+                    if i == 0 :
+                        poketype_not_present_both_teams.add(0)  # 0 represents FIRE
+                    elif i == 1 :
+                        poketype_not_present_both_teams.add(1)  # 1 represents GRASS
+                    elif i == 2 :
+                        poketype_not_present_both_teams.add(2)  # 2 represents WATER
+                    elif i == 3 :
+                        poketype_not_present_both_teams.add(3)  # 3 represents GHOST
+                    elif i == 4 :
+                        poketype_not_present_both_teams.add(4)  # 4 represents NORMAL
+
+            # if res[2] == 1 :
+            #     teams_lost.insert(len(teams_lost),res[1])
+            # elif res[2] == 2: 
+            #     teams_lost.insert(len(teams_lost),res[0])
+        
+            result = poketype_not_present_both_teams.intersection(poketype_present_team_lost)
+
+            if (0 in result):
+                list_str.append("FIRE")
+            elif (1 in result) :
+                list_str.append("GRASS")
+            elif (2 in result) :
+                list_str.append("WATER")
+            elif (3 in result) :
+                list_str.append("GHOST")
+            elif (4 in result) :
+                list_str.append("NORMAL")
+
+            team_lost = None
+            if res[2] == 1 :
+                team_lost = res[1]
+            elif res[2] == 2: 
+                team_lost = res[0]
+
+            for i in range(len(team_lost.team_numbers)) :
+                if team_lost.team_numbers[i] != 0 :
+                    if i == 0 :
+                        poketype_present_team_lost.add(0)
+                    elif i == 1 :
+                        poketype_present_team_lost.add(1)
+                    elif i == 2 :
+                        poketype_present_team_lost.add(2)
+                    elif i == 3 :
+                        poketype_present_team_lost.add(3)
+                    elif i == 4 :
+                        poketype_present_team_lost.add(4)
+
+
+            l.insert(0, (res[0], res[1],list_str ))
         return l
     
     def flip_tournament(self, tournament_list: LinkedList[tuple[PokeTeam, PokeTeam]], team1: PokeTeam, team2: PokeTeam) -> None:
