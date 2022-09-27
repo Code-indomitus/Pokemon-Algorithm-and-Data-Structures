@@ -279,13 +279,12 @@ class PokeTeam:
             else:
                 action = Action.ATTACK
         elif self.ai_type == PokeTeam.AI.RANDOM:
+            actions = list(Action)
             if self.num_of_heals <= 0:
-                rand_num = RandomGen.randint(1, 3)
-                if rand_num == 3:
-                    rand_num += 1
-            else:
-                rand_num = RandomGen.randint(1, 4)
-            action = Action(rand_num)
+                actions.remove(Action.HEAL)
+
+            action = actions[RandomGen.randint(0, len(actions) - 1)]
+
         elif self.ai_type == PokeTeam.AI.USER_INPUT:
             print("Available Actions:")
             print("(1) Attack")
@@ -364,7 +363,7 @@ class PokeTeam:
         :complexity: Best and worst case complexity is O(n*m) where n is the lenght of the team/sorted list and
         m is the length of the team numbers
         """
-
+        
         for i in range(len(self.team_numbers)):
 
             for j in range(self.team_numbers[i]):
