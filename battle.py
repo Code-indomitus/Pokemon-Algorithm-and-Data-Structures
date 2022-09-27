@@ -38,10 +38,12 @@ class Battle:
         
         count = 0
         both_alive = False
-        while ((not team1.is_empty()) and (not team2.is_empty())) or both_alive:
+        one_alive = False
+        while ((not team1.is_empty()) and (not team2.is_empty())) or both_alive or one_alive:
             count += 1
             both_alive = False
-            
+            one_alive = False
+
             if (pokemon1.is_fainted()):
                 pokemon1 = team1.retrieve_pokemon()
 
@@ -192,6 +194,9 @@ class Battle:
 
                 if team1.is_empty():
                     team2.return_pokemon(pokemon2) #TODO CHECK IF CORRECT (UNSURE)
+                
+                if team2.is_empty():
+                    one_alive = True
 
             elif pokemon2.is_fainted() and not pokemon1.is_fainted():
                 pokemon1.level_up()
@@ -200,7 +205,9 @@ class Battle:
 
                 if team2.is_empty():
                     team1.return_pokemon(pokemon1) #TODO CHECK IF CORRECT (UNSURE)
-
+                
+                if team1.is_empty():
+                    one_alive = True
 
             elif pokemon1.is_fainted() and pokemon2.is_fainted():
                 team1.return_pokemon(pokemon1)
