@@ -1,5 +1,4 @@
 from __future__ import annotations
-from curses.ascii import BS
 from bset import BSet
 
 from stack_adt import ArrayStack
