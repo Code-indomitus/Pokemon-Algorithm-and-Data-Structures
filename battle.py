@@ -24,7 +24,7 @@ class Battle:
             return 0
         elif action_list.index(action1) > action_list.index(action2):
             return 1
-        else:
+        elif action_list.index(action1) < action_list.index(action2):
             return 2
 
     def battle(self, team1: PokeTeam, team2: PokeTeam) -> int:
@@ -35,9 +35,11 @@ class Battle:
         if (not team1.is_empty()) and (not team2.is_empty()):
             pokemon1 = team1.retrieve_pokemon()
             pokemon2 = team2.retrieve_pokemon()
-
+        
+        count = 0
         both_alive = False
         while ((not team1.is_empty()) and (not team2.is_empty())) or both_alive:
+            count += 1
             both_alive = False
             
             if (pokemon1.is_fainted()):
@@ -185,9 +187,6 @@ class Battle:
 
             if pokemon1.is_fainted() and not pokemon2.is_fainted():
                 pokemon2.level_up()
-
-                if pokemon2.can_evolve() and pokemon2.should_evolve():
-                    pokemon2 = pokemon2.get_evolved_version()
                 
                 team1.return_pokemon(pokemon1)
 
@@ -197,17 +196,23 @@ class Battle:
             elif pokemon2.is_fainted() and not pokemon1.is_fainted():
                 pokemon1.level_up()
 
-                if pokemon1.can_evolve() and pokemon1.should_evolve():
-                    pokemon1 = pokemon1.get_evolved_version()
-
                 team2.return_pokemon(pokemon2)
 
                 if team2.is_empty():
                     team1.return_pokemon(pokemon1) #TODO CHECK IF CORRECT (UNSURE)
 
+
             elif pokemon1.is_fainted() and pokemon2.is_fainted():
                 team1.return_pokemon(pokemon1)
                 team2.return_pokemon(pokemon2)
+            
+            if not pokemon1.is_fainted():
+                if pokemon1.can_evolve() and pokemon1.should_evolve():
+                    pokemon1 = pokemon1.get_evolved_version()
+
+            if not pokemon2.is_fainted():
+                if pokemon2.can_evolve() and pokemon2.should_evolve():
+                    pokemon2 = pokemon2.get_evolved_version()
             
 ##################################################################################################################
                 
