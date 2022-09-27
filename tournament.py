@@ -33,6 +33,8 @@ class Tournament:
         '''
         self.battle_mode = battle_mode
 
+
+
     def is_valid_tournament(self, tournament_str: str) -> bool:
         '''Checks if the tournament string input represents a valid tournament . Return 
         True if valid, False otherwise.
