@@ -7,6 +7,8 @@ from battle import Battle
 from queue_adt import CircularQueue
 from random_gen import RandomGen
 
+__author__ = "Scaffold by Jackson Goerner and code by Shyam Kamalesh Borkar"
+
 """ Class for creating a Battle Tower.
 
 This class sets up a team and a tower of teams which the team will have fight 
@@ -18,6 +20,7 @@ class BattleTower:
 
     def __init__(self, battle: Battle|None=None) -> None:
         """ Sets up that battle between the player's team and the tower.
+
         :param battle: the battle setup that will be used for the team and the tower.
         :complexity: Best and worst case complexity is O(1)
         """
@@ -28,6 +31,7 @@ class BattleTower:
 
     def set_my_team(self, team: PokeTeam) -> None:
         """ Sets the team that is going to battle through the tower.
+
         :param team: the Poke Team that is going to battle through the tower
         :complexity: Best and worst case complexity is O(1)
         """
@@ -35,10 +39,12 @@ class BattleTower:
 
     def generate_teams(self, n: int) -> None:
         """ Generates teams for the Battle tower.
+
         :param n: the number of teams to be generated for the tower.
         :raises TypeError: if n is not an integer
         :raises ValueError: if n is not greater than 0
-        :complexity: #TODO
+        :complexity: Best and worst case complexity is O(n * P), where n is theh number 
+        of teams to be generated and P is the complexity of Poketeam
         """
         if type(n) != int:
             raise TypeError("An integer is expected for number of teams to generate.")
@@ -62,6 +68,13 @@ class BattleTower:
         :complexity: Best and worst case complexity is O(1)
         """
         return BattleTowerIterator(self.battle, self.fighting_team, self.teams, self.teams_lives)
+    
+    #FIXME
+    # def get_tower_teams(self):
+    #     return self.teams
+
+    # def get_my_team(self):
+    #     return self.fighting_team
 
 """ Class for creating an iterator for the Battle Tower.
 """
@@ -85,8 +98,10 @@ class BattleTowerIterator:
     # DONE
     def __next__(self) -> Tuple(int, str, str, int):
         """ Magic next method that returns the next item in the iterator
+
         :raises StopIteration: when there or no teams in the tower left or 
         the fighting team lost the previous match
+        :complexity: #TODO
         """
         if len(self.teams) == 0 or self.prev_res == 2:
             raise StopIteration
@@ -104,8 +119,8 @@ class BattleTowerIterator:
         if res != 2:
             lives -= 1
 
-        me = str(self.fighting_team)
-        other = str(tower_team)
+        me = self.fighting_team
+        other = tower_team
         
         if lives != 0:
             self.teams.append(tower_team)
@@ -119,6 +134,7 @@ class BattleTowerIterator:
     def avoid_duplicates(self) -> None:
         """ avoids duplicate teams (teams with more than one of the same pokemon) in the
         battle tower by refactoring the tower teams.
+        
         :complexity: #TODO
         """
         refactored_team = CircularQueue(len(self.teams))
