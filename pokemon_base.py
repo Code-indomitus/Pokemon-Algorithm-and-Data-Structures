@@ -141,7 +141,7 @@ class PokemonBase(ABC, Generic[T]):
 
         if RandomGen.random_chance(0.2):
             other.status = self.get_inflict_status()
-            
+                
 
     @abstractmethod
     def get_poke_name(self) -> str:

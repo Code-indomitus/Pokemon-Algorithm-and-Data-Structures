@@ -1,5 +1,4 @@
 from __future__ import annotations
-import base64
 from typing import Tuple
 
 from poke_team import PokeTeam
@@ -19,7 +18,7 @@ are 0 the team is victorious.
 class BattleTower:
 
     def __init__(self, battle: Battle|None=None) -> None:
-        """ Sets up that battle between the player's team and the tower.
+        """ Sets up tha battle between the player's team and the tower.
 
         :param battle: the battle setup that will be used for the team and the tower.
         :complexity: Best and worst case complexity is O(1)
@@ -70,18 +69,23 @@ class BattleTower:
         return BattleTowerIterator(self.battle, self.fighting_team, self.teams, self.teams_lives)
     
     #FIXME
-    # def get_tower_teams(self):
-    #     return self.teams
+    def get_tower_teams(self):
+        return self.teams
 
-    # def get_my_team(self):
-    #     return self.fighting_team
+    def get_my_team(self):
+        return self.fighting_team
 
 """ Class for creating an iterator for the Battle Tower.
 """
 class BattleTowerIterator:
 
     def __init__(self, battle: Battle, fighting_team: PokeTeam, teams: CircularQueue, teams_lives: CircularQueue) -> None:
-        """ #TODO
+        """ Method that initialises the BattleTowerIterator
+        :param battle: a battle object
+        :param fighting_team: the team that will fight through the tower
+        :param teams: the teams in the tower 
+        :param teams_lives: the lives of the respective teams in the tower
+        :complexity: Best and worst case complexity is O(1)
         """
         self.battle = battle
         self.fighting_team = fighting_team
@@ -89,19 +93,17 @@ class BattleTowerIterator:
         self.teams_lives = teams_lives
         self.prev_res = 0
 
-
-    # DONE
     def __iter__(self) -> BattleTowerIterator:
         """ Magic iter method that returns the class itself """
         return self
 
-    # DONE
     def __next__(self) -> Tuple(int, str, str, int):
         """ Magic next method that returns the next item in the iterator
 
         :raises StopIteration: when there or no teams in the tower left or 
         the fighting team lost the previous match
-        :complexity: #TODO
+        :complexity: Best and worst case complexity is O(B + T) where B is the complexity of battle and 
+        T is the complexity of regenerating the poke team.
         """
         if len(self.teams) == 0 or self.prev_res == 2:
             raise StopIteration
@@ -113,7 +115,12 @@ class BattleTowerIterator:
         self.fighting_team.regenerate_team()
         tower_team.regenerate_team()
 
+        print(str(self.fighting_team))
+        print(str(tower_team))
+
         res = self.battle.battle(self.fighting_team, tower_team)
+        print(str(self.fighting_team))
+        print(str(tower_team))
         self.prev_res = res
 
         if res != 2:
@@ -137,9 +144,10 @@ class BattleTowerIterator:
         
         :complexity: #TODO
         """
-        refactored_team = CircularQueue(len(self.teams))
-        for i in range(len(self.teams)):
+        tower_length = len(self.teams)
+        for i in range(tower_length):
             team = self.teams.serve()
+            lives = self.teams_lives.serve()
             team_numbers = team.get_team_numbers()
             duplicate = False
             for number in team_numbers:
@@ -148,13 +156,9 @@ class BattleTowerIterator:
                     break
             
             if not duplicate:
-                refactored_team.append(team)
+                self.teams.append(team)
+                self.teams_lives.append(lives)
             
-            # place team back into the queue (queue does not become empty)
-            self.teams.append(team)
-        
-        self.teams = refactored_team
-                
 
 
     def sort_by_lives(self):
