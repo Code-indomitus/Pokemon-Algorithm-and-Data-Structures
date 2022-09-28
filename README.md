@@ -15,9 +15,9 @@ Template Repository for use in Assignment 2 - REPLACE
 - [x] Task 1
 - [x] Task 2
 - [x] Task 3
-- [ ] Task 4
-- [ ] Task 5
-- [ ] Task 6
+- [x] Task 4
+- [x] Task 5
+- [x] Task 6
 
 ## Carry out Testing!
 - [x] Task 1
@@ -29,10 +29,10 @@ Template Repository for use in Assignment 2 - REPLACE
 
 ## Complete Documentation!
 - [x] Task 1
-- [ ] Task 2
+- [x] Task 2
 - [x] Task 3
 - [ ] Task 4
 - [x] Task 5
-- [ ] Task 6
+- [x] Task 6
 
 
