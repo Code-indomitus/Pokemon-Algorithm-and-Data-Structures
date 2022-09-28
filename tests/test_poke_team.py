@@ -57,9 +57,13 @@ class TestPokeTeam(BaseTest):
         self.assertEqual(str(t), "Dawn (2): [LV. 1 Gastly: 6 HP, LV. 1 Squirtle: 11 HP, LV. 1 Bulbasaur: 13 HP, LV. 1 Eevee: 10 HP, LV. 1 Charmander: 9 HP]")
 
     def test_special_mode_2_raise_error(self):
+        """ Test that an exception is raised when a criterion is not specified for battle mode 2"""
+
         self.assertRaises(Exception, lambda:PokeTeam("Shyam", [1, 1, 1, 1, 1], 2, PokeTeam.AI.ALWAYS_ATTACK))
 
     def test_special_mode_2(self):
+        """ Test the battle mode 2 ordering of pokemon accoring to their speed."""
+
         t = PokeTeam("Shyam", [1, 1, 1, 1, 1], 2, PokeTeam.AI.ALWAYS_ATTACK, criterion = Criterion.SPD)
         self.assertEqual(str(t), "Shyam (2): [LV. 1 Charmander: 9 HP, LV. 1 Eevee: 10 HP, LV. 1 Bulbasaur: 13 HP, LV. 1 Squirtle: 11 HP, LV. 1 Gastly: 6 HP]")
         # C E B S G
@@ -74,6 +78,9 @@ class TestPokeTeam(BaseTest):
             self.assertIsInstance(p, e)
     
     def test_retrieving_and_returning(self):
+        """ Test that the retrieving and returning of pokmeon for each type of battle mode is valid 
+        and accurate.
+        """
         t1 = PokeTeam("Jun Yu", [1, 2, 0, 1, 0], 0, PokeTeam.AI.ALWAYS_ATTACK)
         t2 = PokeTeam("Rachit", [1, 1, 1, 1, 1], 1, PokeTeam.AI.SWAP_ON_SUPER_EFFECTIVE)
         t3 = PokeTeam("Shyam", [0, 1, 1, 1, 1], 2, PokeTeam.AI.ALWAYS_ATTACK, criterion = Criterion.SPD)
@@ -100,6 +107,7 @@ class TestPokeTeam(BaseTest):
         self.assertIsInstance(p, Eevee)
     
     def test_special_mode_0(self):
+        """ Test special of battle mode 0"""
         t = PokeTeam("Jun Yu", [1, 0, 1, 1, 1], 0, PokeTeam.AI.ALWAYS_ATTACK)
         # C S G E
         t.special()
