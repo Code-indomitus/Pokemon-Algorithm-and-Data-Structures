@@ -37,7 +37,7 @@ class Tournament:
     def is_valid_tournament(self, tournament_str: str) -> bool:
         '''Checks if the tournament string input represents a valid tournament . Return 
         True if valid, False otherwise.
-        :complexity: O(N*Index) where N is the size of the input '''
+        :complexity: O(N*Index) where N is the size of the input (tournament_str) '''
         str_split_postfix = tournament_str.split()
         postfix_operands = LinkedList()
         s = LinkedList()
@@ -143,8 +143,10 @@ class Tournament:
     def linked_list_with_metas(self) -> LinkedList[tuple[PokeTeam, PokeTeam, list[str]]]:
         '''Seach for poketypes of pokemons that are not present in both the teams in the current battle but exist in the 
         poketeams that have lost before them in the tournament.
-        :complexity: O(M * P) where M is the total number of matches played 
-                              where P is the limit on the number of pokemon per team '''
+        :complexity: O(M*(N+(J*K*Index)+(K*N)))   where M is the total number of matches played 
+                              where N is the size of the team_numbers
+                              where J is the size of the battleHistory linkedList
+                              where K is size of the temp linkedList '''
         l = LinkedList()
 
 
