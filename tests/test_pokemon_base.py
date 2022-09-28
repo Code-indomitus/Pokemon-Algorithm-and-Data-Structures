@@ -41,6 +41,7 @@ class TestPokemonBase(BaseTest):
         self.assertIsInstance(new_g, Haunter)
 
     def test_is_fainted(self):
+        """ Test to check if a pokemon is fainted after losing the correct amount of damage"""
         g = Gastly() # hp = 6
 
         self.assertEqual(g.get_hp(), 6)
@@ -56,6 +57,9 @@ class TestPokemonBase(BaseTest):
         self.assertEqual(g.is_fainted(), True)
 
     def test_attack(self):
+        """ Test for the attack feature of the pokemon base class.
+        Pokemons must attack each other dealing the relevant damage accoringly.
+        """
         RandomGen.set_seed(10)
 
         c = Charmander()
@@ -77,6 +81,7 @@ class TestPokemonBase(BaseTest):
 
 
     def test_multiplier(self):
+        """ Test the correct effective multiplier based on the pokemon's type"""
         b = Bulbasaur()
         c = Charmander()
         s = Squirtle()
@@ -92,6 +97,9 @@ class TestPokemonBase(BaseTest):
         self.assertEqual(e.get_effective_multiplier(c), 1.25)
 
     def test_status(self):
+        """ Test that the correct status is chosen to be inflicted based
+        on the pokemon's types
+        """
         b = Bulbasaur()
         c = Charmander()
         s = Squirtle()
@@ -105,6 +113,7 @@ class TestPokemonBase(BaseTest):
         self.assertEqual(g.get_inflict_status(), StatusEffect.SLEEP)
     
     def test_pokemon_str(self):
+        """Test the pokemon base class magic str method"""
         h  = Haunter()
         g = Gengar()
         b = Blastoise()
