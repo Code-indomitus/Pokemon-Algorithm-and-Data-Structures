@@ -305,6 +305,10 @@ class Gastly(PokemonBase):
         haunter = Haunter()
         haunter.set_status_effect(self.get_status_effect())
         haunter.lose_hp(hp_difference)
+        # Hauter should have the same level as gastly. as they both start from level 1
+        for i in range(self.get_level() - 1):
+            haunter.level_up()
+            
         return haunter
 
 class Eevee(PokemonBase):
