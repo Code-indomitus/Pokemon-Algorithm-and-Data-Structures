@@ -1,6 +1,4 @@
 from __future__ import annotations
-from inspect import stack
-# from sys import last_value
 
 
 """
