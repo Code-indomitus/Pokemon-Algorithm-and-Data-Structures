@@ -138,7 +138,11 @@ class BattleTowerIterator:
         """ avoids duplicate teams (teams with more than one of the same pokemon type) in the
         battle tower by refactoring the tower teams.
         
-        :complexity: #TODO
+        :complexity: Best and worst case complexity is O(N). Where N is the number of remaining teams in the tower.
+        Reasoning for Complexity: There are two for loops so the worst case complexity is essentially O(N * n), where
+        N is the reamining tower teams and n is the length of team numbers. Since that is constant and is 5 the worst case 
+        complexity evaluates to O(N * 5) which becomes O(N). The best case is also O(N) if the first iteration of the second
+        loop is always broken at the start of the team numbers.
         """
         tower_length = len(self.teams)
         for i in range(tower_length):
