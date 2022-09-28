@@ -24,6 +24,8 @@ class TestPokemon(BaseTest):
         self.assertEqual(str(v), "LV. 5 Venusaur: 17 HP")
     
     def test_pokemon_speed(self):
+        """ Test the expected speed stat of three pokemons"""
+
         C = Charizard()
         b = Blastoise()
         c = Charmander()
@@ -39,6 +41,8 @@ class TestPokemon(BaseTest):
         self.assertEqual(b.get_speed(), 10)
     
     def test_pokemon_attack(self):
+        """ Test the expected attack stat of three pokemons"""
+
         s = Squirtle()
         g = Gastly()
         h = Haunter()
@@ -54,6 +58,8 @@ class TestPokemon(BaseTest):
         self.assertEqual(h.get_attack_damage(), 8)
 
     def test_pokemon_defence_pts(self):
+        """ Test the expected defence points of three pokemon"""
+
         g = Gengar()
         e = Eevee()
         b = Bulbasaur()
@@ -68,6 +74,9 @@ class TestPokemon(BaseTest):
         self.assertEqual(b.get_defence(), 5)
     
     def test_pokemon_evolution(self):
+        """ Test the evolution of pokemon and test that after evolution the 
+        evolved pokemon have the same status effect as their pre evolution.
+        """
         
         c = Charmander()
         b = Bulbasaur()
@@ -96,6 +105,10 @@ class TestPokemon(BaseTest):
 
 
     def test_pokemon_defend_and_name(self):
+        """ Test the defend logic and mechanism for the three pokemon's and
+        test their get name methods.
+        """
+
         e = Eevee()
         c = Charizard()
         b = Blastoise()
@@ -110,6 +123,8 @@ class TestPokemon(BaseTest):
         self.assertEqual(b.get_poke_name(), "Blastoise")
     
     def test_level_up(self):
+        """ Test that leveling up the pokemon still obeys the difference in hp"""
+
         c = Charmander() # hp = 9
 
         c.lose_hp(5)
