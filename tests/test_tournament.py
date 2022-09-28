@@ -83,3 +83,97 @@ class TestTournament(BaseTest):
         # 1054
         t = Tournament()
         self.assertFalse(t.is_balanced_tournament("Roark Gardenia + Maylene Crasher_Wake + Fantina Byron + + + Candice Volkner + +"))
+
+    # OWN TEST CASES
+
+    # Test set_battle_mode function
+    def set_battle_mode_0(self):
+        tournament = Tournament(Battle(verbosity=0))
+        tournament.set_battle_mode(0)
+        self.assertEqual(tournament.battle_mode,0)
+
+    def set_battle_mode_1(self):
+        tournament = Tournament(Battle(verbosity=0))
+        tournament.set_battle_mode(1)
+        self.assertEqual(tournament.battle_mode,1)
+    
+    def set_battle_mode_2(self):
+        tournament = Tournament(Battle(verbosity=0))
+        tournament.set_battle_mode(2)
+        self.assertEqual(tournament.battle_mode,2)
+
+    # Test start_tournament function and is_valid_tournament function
+
+    # Test description: Tournament started with an invalid tournament_str that has more '+' operator than necessary
+    def test_start_tournament_invalid_tournament_str_1(self):
+        t = Tournament(Battle(verbosity=0))
+        t.set_battle_mode(1)
+        self.assertRaises(ValueError, lambda: t.start_tournament("Roark Gardenia + Maylene Crasher_Wake + Fantina + + +"))
+
+    # Test description: Tournament started with an invalid tournament_str that has insufficient '+' operator 
+    def test_start_tournament_invalid_tournament_str_2(self):
+        t = Tournament(Battle(verbosity=0))
+        t.set_battle_mode(1)
+        self.assertFalse(t.start_tournament("Roark Gardenia + Maylene Crasher_Wake"))
+
+    # Test description: Tournament started with a valid tournament_str
+    def test_start_tournament_valid_tournament_str(self):
+        t = Tournament(Battle(verbosity=0))
+        t.set_battle_mode(1)
+        self.assertEqual(t.start_tournament("Roark Gardenia + Maylene Crasher_Wake + Fantina Byron + + +"),None)
+
+
+    # Test advance_tournament 
+    def test_random_1(self):
+        RandomGen.set_seed(2468)
+        t = Tournament(Battle(verbosity=0))
+        t.set_battle_mode(0)
+        t.start_tournament("Anthony James + Yessirr What + +")
+
+        team1, team2, res = t.advance_tournament() # Anthony vs James
+        self.assertEqual(res, 2)
+        self.assertTrue(str(team1).startswith("Anthony"))
+        self.assertTrue(str(team2).startswith("James"))
+
+        team1, team2, res = t.advance_tournament() # Yessirr vs What
+        self.assertEqual(res, 2)
+        self.assertTrue(str(team1).startswith("Yessirr"))
+        self.assertTrue(str(team2).startswith("What"))
+
+        team1, team2, res = t.advance_tournament() # James vs What
+        self.assertEqual(res, 2)
+        self.assertTrue(str(team1).startswith("James"))
+        self.assertTrue(str(team2).startswith("What"))
+
+    def test_random_2(self):
+        RandomGen.set_seed(3579)
+        t = Tournament(Battle(verbosity=0))
+        t.set_battle_mode(0)
+        t.start_tournament("How Rachit + Shyam Jobin + + Wait Random + +")
+
+        team1, team2, res = t.advance_tournament() # How vs Rachit
+        self.assertEqual(res, 2)
+        self.assertTrue(str(team1).startswith("How"))
+        self.assertTrue(str(team2).startswith("Rachit"))
+
+        team1, team2, res = t.advance_tournament() # Shyam vs Jobin
+        self.assertEqual(res, 1)
+        self.assertTrue(str(team1).startswith("Shyam"))
+        self.assertTrue(str(team2).startswith("Jobin"))
+
+        team1, team2, res = t.advance_tournament() # Rachit vs Shyam
+        self.assertEqual(res, 2)
+        self.assertTrue(str(team1).startswith("Rachit"))
+        self.assertTrue(str(team2).startswith("Shyam"))
+
+        team1, team2, res = t.advance_tournament() # Wait vs Random
+        self.assertEqual(res, 2)
+        self.assertTrue(str(team1).startswith("Wait"))
+        self.assertTrue(str(team2).startswith("Random"))
+
+        team1, team2, res = t.advance_tournament() # Shyam vs Random
+        self.assertEqual(res, 2)
+        self.assertTrue(str(team1).startswith("Shyam"))
+        self.assertTrue(str(team2).startswith("Random"))
+
+       
