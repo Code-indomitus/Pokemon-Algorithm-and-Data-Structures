@@ -146,65 +146,82 @@ class Tournament:
         :complexity: O(M * P) where M is the total number of matches played 
                               where P is the limit on the number of pokemon per team '''
         l = LinkedList()
-        poketype_present_team_lost = BSet()
+
+
+        battleHistory = LinkedList()
+
         while True:
             res = self.advance_tournament()
             if res is None:
                 break
 
+            team1 = res[0]
+            team2 = res[1]
+
+
+
             poketype_not_present_both_teams = BSet()
+            poketype_present_team_lost = BSet()
+    
             
             list_str = []
 
-            for i in range(res[0].team_numbers):
-                if res[0].team_numbers[i] == 0 and res[1].team_numbers[i] == 0:
+            for i in range(len(team1.team_numbers)):
+                if team1.team_numbers[i] == 0 and team2.team_numbers[i] == 0:
                     if i == 0 :
-                        poketype_not_present_both_teams.add(0)  # 0 represents FIRE
+                        poketype_not_present_both_teams.add(1)  # 1 represents FIRE
                     elif i == 1 :
-                        poketype_not_present_both_teams.add(1)  # 1 represents GRASS
+                        poketype_not_present_both_teams.add(2)  # 2 represents GRASS
                     elif i == 2 :
-                        poketype_not_present_both_teams.add(2)  # 2 represents WATER
+                        poketype_not_present_both_teams.add(3)  # 3 represents WATER
                     elif i == 3 :
-                        poketype_not_present_both_teams.add(3)  # 3 represents GHOST
+                        poketype_not_present_both_teams.add(4)  # 4 represents GHOST
                     elif i == 4 :
-                        poketype_not_present_both_teams.add(4)  # 4 represents NORMAL
+                        poketype_not_present_both_teams.add(5)  # 5 represents NORMAL
 
-            # if res[2] == 1 :
-            #     teams_lost.insert(len(teams_lost),res[1])
-            # elif res[2] == 2: 
-            #     teams_lost.insert(len(teams_lost),res[0])
-        
+            temp = LinkedList()
+            temp.insert(0,team1)
+            temp.insert(1,team2)
+
+            for i in range(len(battleHistory)-1,-1,-1):
+                for j in range(len(temp)) :
+                    if battleHistory[i][0].team_name == temp[j].team_name :
+                        temp.insert(len(temp),battleHistory[i][1])
+                    elif battleHistory[i][1].team_name == temp[j].team_name :
+                        temp.insert(len(temp),battleHistory[i][0])
+            
+            temp.delete_at_index(0)
+            temp.delete_at_index(0)
+
+
+            for i in range(len(temp)):
+                for j in range(len(temp[i].team_numbers)) :
+                    if temp[i].team_numbers[j] != 0 :
+                        if j == 0 :
+                            poketype_present_team_lost.add(1)
+                        elif j == 1 :
+                            poketype_present_team_lost.add(2)
+                        elif j == 2 :
+                            poketype_present_team_lost.add(3)
+                        elif j == 3 :
+                            poketype_present_team_lost.add(4)
+                        elif j == 4 :
+                            poketype_present_team_lost.add(5)
+
             result = poketype_not_present_both_teams.intersection(poketype_present_team_lost)
 
-            if (0 in result):
+            if (1 in result):
                 list_str.append("FIRE")
-            elif (1 in result) :
-                list_str.append("GRASS")
             elif (2 in result) :
-                list_str.append("WATER")
+                list_str.append("GRASS")
             elif (3 in result) :
-                list_str.append("GHOST")
+                list_str.append("WATER")
             elif (4 in result) :
+                list_str.append("GHOST")
+            elif (5 in result) :
                 list_str.append("NORMAL")
 
-            team_lost = None
-            if res[2] == 1 :
-                team_lost = res[1]
-            elif res[2] == 2: 
-                team_lost = res[0]
-
-            for i in range(len(team_lost.team_numbers)) :
-                if team_lost.team_numbers[i] != 0 :
-                    if i == 0 :
-                        poketype_present_team_lost.add(0)
-                    elif i == 1 :
-                        poketype_present_team_lost.add(1)
-                    elif i == 2 :
-                        poketype_present_team_lost.add(2)
-                    elif i == 3 :
-                        poketype_present_team_lost.add(3)
-                    elif i == 4 :
-                        poketype_present_team_lost.add(4)
+            battleHistory.insert(len(battleHistory),(team1,team2))
 
 
             l.insert(0, (res[0], res[1],list_str ))
@@ -213,3 +230,4 @@ class Tournament:
     def flip_tournament(self, tournament_list: LinkedList[tuple[PokeTeam, PokeTeam]], team1: PokeTeam, team2: PokeTeam) -> None:
         # 1054
         raise NotImplementedError()
+
