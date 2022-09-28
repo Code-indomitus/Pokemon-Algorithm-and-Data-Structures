@@ -1,6 +1,7 @@
-""" This file provides a 10 classes that represent the 10 popkemon in the specifications. Each of these
-10 pokemon inherit from the pokemon base class to share common functionality but each of them have slight variations in 
-their stat formulas and features.
+""" 
+This file provides 10 classes that represent the 10 pokemon in the specifications. 
+
+Each of these 10 pokemon inherit from the pokemon base class to share common functionality but each of them have slight variations in their stat formulas and features.
 """
 from pokemon_base import PokemonBase, StatusEffect, PokeType
 __author__ = "Scaffold by Jackson Goerner, Code by Jun Yu Tan, Shyam Kamalesh Borkar, Rachit Bhatia and Jobin Dan"
