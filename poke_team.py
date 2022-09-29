@@ -177,7 +177,7 @@ class PokeTeam:
     def special(self) -> None:
         """ carries out a special operation on the pokemon team based on the battle mode
         :complexity: Battle Mode 0 - Best and worst is O(n) where n is the length of the stack
-                     Battle Mode 1 - Best and worst is O(n) where n is the lenght of the queue
+                     Battle Mode 1 - Best and worst is O(n) where n is the length of the queue
                      Battle Mode 2 - Best is O(1) when the list is already sorted or the first iteration produces sorting result (Bubble sort)
                                      Worst is O(n^2) where n is the length of the list (Bubble sort)
         """
@@ -191,7 +191,7 @@ class PokeTeam:
                 while len(self.team) > 1:
                     temp_stack.push(self.team.pop())
                 
-                last_pokemon =self.team.pop()
+                last_pokemon = self.team.pop()
 
                 self.team.push(first_pokemon)
 
@@ -227,8 +227,8 @@ class PokeTeam:
     def __str__(self) -> str:
         """ magic method that produces the string version of the pokemon team
         :complexity: Battle Mode 0 - Best and worst is O(n) where n is the length of the stack
-                     Battle Mode 1 - Best and worst is O(n) where n is the lenght of the queue
-                     Battle Mode 2 - Best and worst is O(n) where n is the lenght of the array sorted list
+                     Battle Mode 1 - Best and worst is O(n) where n is the length of the queue
+                     Battle Mode 2 - Best and worst is O(n) where n is the length of the array sorted list
         """
         result = self.team_name + " " + "(" + str(self.battle_mode) + ")" + ": "
 
@@ -315,7 +315,7 @@ class PokeTeam:
 
     def fill_team_mode_zero(self) -> None:
         """ fills up the pokemon team according to battle mode zero
-        :complexity: Best and worst case complexity is O(n*m) where n is the lenght of the team/stack and
+        :complexity: Best and worst case complexity is O(n*m) where n is the length of the team/stack and
         m is the length of the team numbers
         """
 
@@ -337,7 +337,7 @@ class PokeTeam:
 
     def fill_team_mode_one(self) -> None:
         """ fills up the pokemon team according to battle mode one
-        :complexity: Best and worst case complexity is O(n*m) where n is the lenght of the team/queue and
+        :complexity: Best and worst case complexity is O(n*m) where n is the length of the team/queue and
         m is the length of the team numbers
         """
 
@@ -358,7 +358,7 @@ class PokeTeam:
 
     def fill_team_mode_two(self) -> None:
         """ fills up the pokemon team according to battle mode two
-        :complexity: Best and worst case complexity is O(n*m) where n is the lenght of the team/sorted list and
+        :complexity: Best and worst case complexity is O(n*m) where n is the length of the team/sorted list and
         m is the length of the team numbers
         """
         
