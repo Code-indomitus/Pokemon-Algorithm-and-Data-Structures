@@ -119,3 +119,16 @@ class TestPokeTeam(BaseTest):
         self.assertEqual(len(pokemon), len(expected_classes))
         for p, e in zip(pokemon, expected_classes):
             self.assertIsInstance(p, e)
+    
+    def test_random_team(self):
+        """ Test a random poke team"""
+
+        RandomGen.set_seed(51234)
+        t = PokeTeam.random_team("N", 2, team_size=6, criterion=Criterion.HP)
+        pokemon = []
+        while not t.is_empty():
+            pokemon.append(t.retrieve_pokemon())
+        expected_classes = [Bulbasaur, Bulbasaur, Bulbasaur, Squirtle, Gastly, Gastly]
+        self.assertEqual(len(pokemon), len(expected_classes))
+        for p, e in zip(pokemon, expected_classes):
+            self.assertIsInstance(p, e)
