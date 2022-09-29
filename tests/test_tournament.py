@@ -176,4 +176,93 @@ class TestTournament(BaseTest):
         self.assertTrue(str(team1).startswith("Shyam"))
         self.assertTrue(str(team2).startswith("Random"))
 
+
+    def test_random_3(self):
+        RandomGen.set_seed(6453634)
+        t = Tournament(Battle(verbosity=0))
+        t.set_battle_mode(0)
+        t.start_tournament("Okay Nope + Lol Why + Can Really + + +")
+
+        team1, team2, res = t.advance_tournament() # Okay vs Nope
+        self.assertEqual(res, 1)
+        self.assertTrue(str(team1).startswith("Okay"))
+        self.assertTrue(str(team2).startswith("Nope"))
+
+        team1, team2, res = t.advance_tournament() # Lol vs Why
+        self.assertEqual(res, 1)
+        self.assertTrue(str(team1).startswith("Lol"))
+        self.assertTrue(str(team2).startswith("Why"))
+
+        team1, team2, res = t.advance_tournament() # Can vs Really
+        self.assertEqual(res, 1)
+        self.assertTrue(str(team1).startswith("Can"))
+        self.assertTrue(str(team2).startswith("Really"))
+
+        team1, team2, res = t.advance_tournament() # Lol vs Can
+        self.assertEqual(res, 2)
+        self.assertTrue(str(team1).startswith("Lol"))
+        self.assertTrue(str(team2).startswith("Can"))
+
+        team1, team2, res = t.advance_tournament() # Okay vs Can
+        self.assertEqual(res, 2)
+        self.assertTrue(str(team1).startswith("Okay"))
+        self.assertTrue(str(team2).startswith("Can"))
+
+
+    # Test linked_list_with_metas
+    def test_metas_1(self):
+        RandomGen.set_seed(2468)
+        t = Tournament(Battle(verbosity=0))
+        t.set_battle_mode(0)
+        t.start_tournament("Anthony James + Yessirr What + +")
+        l = t.linked_list_with_metas()
+        
+        expected = [
+            ['FIRE'],
+            [],
+            [],
+        ]
+        for x in range(len(l)):
+            team1, team2, types = l[x]
+            self.assertEqual(expected[x], types)
+
+
+    def test_metas_2(self):
+        RandomGen.set_seed(3579)
+        t = Tournament(Battle(verbosity=0))
+        t.set_battle_mode(1)
+        t.start_tournament("How Rachit + Shyam Jobin + + Wait Random + +")
+        l = t.linked_list_with_metas()
+   
+        expected = [
+            [],
+            [],
+            [],
+            [],
+            [],
+        ]
+        for x in range(len(l)):
+            team1, team2, types = l[x]
+            self.assertEqual(expected[x], types)
+
+    def test_metas_3(self):
+        RandomGen.set_seed(6453634)
+        t = Tournament(Battle(verbosity=0))
+        t.set_battle_mode(0)
+        t.start_tournament("Okay Nope + Lol Why + Can Really + + +")
+        l = t.linked_list_with_metas()
+
+        print(l)
+        
+        expected = [
+            ['NORMAL'],
+            [],
+            [],
+            [],
+            [],
+        ]
+        for x in range(len(l)):
+            team1, team2, types = l[x]
+            self.assertEqual(expected[x], types)
+
        
