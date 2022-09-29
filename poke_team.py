@@ -50,7 +50,7 @@ class PokeTeam:
         :pre: team_name must be a string
         :pre: battle_mode must be an integer
         :pre: battle_mode can only be one of 1, 2 and 3
-        :pre: batttle_mode 2 must have a specified criterion with it
+        :pre: battle_mode 2 must have a specified criterion with it
         :raises TypeError: if team_name is not a string
         :raises TypeError: if battle_mode is not an integer
         :raises ValueError: if battle_mode is not 1, 2 or 3
