@@ -42,8 +42,8 @@ class BattleTower:
         :param n: the number of teams to be generated for the tower.
         :raises TypeError: if n is not an integer
         :raises ValueError: if n is not greater than 0
-        :complexity: Best and worst case complexity is O(n * P), where n is theh number 
-        of teams to be generated and P is the complexity of Poketeam
+        :complexity: Best and worst case complexity is O(n * P), where n is the number 
+        of teams to be generated and P is the complexity of Poketeam.random_team method.
         """
         if type(n) != int:
             raise TypeError("An integer is expected for number of teams to generate.")
@@ -68,12 +68,6 @@ class BattleTower:
         """
         return BattleTowerIterator(self.battle, self.fighting_team, self.teams, self.teams_lives)
     
-    #FIXME
-    def get_tower_teams(self):
-        return self.teams
-
-    def get_my_team(self):
-        return self.fighting_team
 
 """ Class for creating an iterator for the Battle Tower.
 """
@@ -94,7 +88,9 @@ class BattleTowerIterator:
         self.prev_res = 0
 
     def __iter__(self) -> BattleTowerIterator:
-        """ Magic iter method that returns the class itself """
+        """ Magic iter method that returns the class itself
+        :complexity: Best and worst case complexity is O(1)
+        """
         return self
 
     def __next__(self) -> Tuple(int, str, str, int):
@@ -102,9 +98,10 @@ class BattleTowerIterator:
 
         :raises StopIteration: when there or no teams in the tower left or 
         the fighting team lost the previous match
-        :complexity: Best and worst case complexity is O(B + T) where B is the complexity of battle and 
-        T is the complexity of regenerating the poke team.
+        :complexity: Best and worst case complexity is O(B) where B is the complexity of battle between 
+        the team and tower.
         """
+        # Stop iteration if tower is empty or team lost battle in the tower
         if len(self.teams) == 0 or self.prev_res == 2:
             raise StopIteration
         
@@ -115,20 +112,19 @@ class BattleTowerIterator:
         self.fighting_team.regenerate_team()
         tower_team.regenerate_team()
 
-        print(str(self.fighting_team))
-        print(str(tower_team))
-
+        # Get the result of the battle
         res = self.battle.battle(self.fighting_team, tower_team)
-        print(str(self.fighting_team))
-        print(str(tower_team))
+
         self.prev_res = res
 
+        # only decrease lives if the tower team lost or drew
         if res != 2:
             lives -= 1
 
         me = self.fighting_team
         other = tower_team
         
+        # add tower team back into the tower if they have lives left
         if lives != 0:
             self.teams.append(tower_team)
             self.teams_lives.append(lives)
@@ -137,12 +133,16 @@ class BattleTowerIterator:
 
         return result
 
-    #TODO
+
     def avoid_duplicates(self) -> None:
-        """ avoids duplicate teams (teams with more than one of the same pokemon) in the
+        """ avoids duplicate teams (teams with more than one of the same pokemon type) in the
         battle tower by refactoring the tower teams.
         
-        :complexity: #TODO
+        :complexity: Best and worst case complexity is O(N). Where N is the number of remaining teams in the tower.
+        Reasoning for Complexity: There are two for loops so the worst case complexity is essentially O(N * n), where
+        N is the reamining tower teams and n is the length of team numbers. Since that is constant and is 5 the worst case 
+        complexity evaluates to O(N * 5) which becomes O(N). The best case is also O(N) if the first iteration of the second
+        loop is always broken at the start of the team numbers.
         """
         tower_length = len(self.teams)
         for i in range(tower_length):
@@ -150,16 +150,18 @@ class BattleTowerIterator:
             lives = self.teams_lives.serve()
             team_numbers = team.get_team_numbers()
             duplicate = False
+
+            # if a team number is greater than 1 then they have duplicates
             for number in team_numbers:
                 if number > 1:
                     duplicate = True
                     break
             
+            # add team back to the tower if they are not duplicate
             if not duplicate:
                 self.teams.append(team)
                 self.teams_lives.append(lives)
             
-
 
     def sort_by_lives(self):
         # 1054

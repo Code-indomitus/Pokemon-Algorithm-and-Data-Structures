@@ -103,16 +103,19 @@ class ArraySortedList(SortedList[T]):
 
     def add(self, item: ListItem) -> None:
         """ Add new element to the list. """
-        if self.order == "decreasing":
-            self.increasing_order()
         if self.is_full():
             self._resize()
+        
+        if self.order == "decreasing":
+            self.increasing_order()
+            self.add_pokemon_decreasing(item)
+        
+        else:
+            # find where to place it
+            position = self._index_to_add(item)
 
-        # find where to place it
-        position = self._index_to_add(item)
-
-        self[position] = item
-        self.length += 1
+            self[position] = item
+            self.length += 1
 
         if self.order == "decreasing":
             self.decreasing_order()
@@ -133,8 +136,30 @@ class ArraySortedList(SortedList[T]):
                 return mid
 
         return low
+
+    def add_pokemon_decreasing(self, pokemon: ListItem):
+        """ Add a pokemon to the list when it is in decreasing order"""
+        index = -1
+        for i in range(len(self) - 1, -1, -1):
+            if pokemon.key >= self.array[i].key:
+                index = i
+                break
+        if index == -1 and len(self) == 0:
+            self._shuffle_right(0)
+            self.array[0] = pokemon
+            self.length += 1
+
+        elif index == -1 and len(self) == 1:
+            self._shuffle_right(0)
+            self.array[0] = pokemon
+            self.length += 1
+        else:
+            self._shuffle_right(index)
+            self.array[index + 1] = pokemon
+            self.length += 1
     
     def reverse_order(self):
+        """ Reverses the current order of the sorted array list"""
         if self.order == "increasing":
             self.order = "decreasing"
             self.decreasing_order()
@@ -143,6 +168,7 @@ class ArraySortedList(SortedList[T]):
             self.increasing_order()
 
     def increasing_order(self):
+        """Makes sorted list ascending order"""
         n = len(self)
         for j in range(n - 1, 0, -1):
             swapped = False
@@ -154,6 +180,7 @@ class ArraySortedList(SortedList[T]):
                 break
 
     def decreasing_order(self):
+        """Makes sorted list descending order"""
         n = len(self)
         for j in range(n - 1, 0, -1):
             swapped = False
@@ -165,4 +192,8 @@ class ArraySortedList(SortedList[T]):
                 break
 
     def swap(self, i, j):
+        """ Swaps two adjacent elements"""
         self.array[i], self.array[j] = self.array[j], self.array[i]
+
+
+

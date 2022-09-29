@@ -1,6 +1,7 @@
-""" This file provides a 10 classes that represent the 10 popkemon in the specifications. Each of these
-10 pokemon inherit from the pokemon base class to share common functionality but each of them have slight variations in 
-their stat formulas and features.
+""" 
+This file provides 10 classes that represent the 10 pokemon in the specifications. 
+
+Each of these 10 pokemon inherit from the pokemon base class to share common functionality but each of them have slight variations in their stat formulas and features.
 """
 from pokemon_base import PokemonBase, StatusEffect, PokeType
 __author__ = "Scaffold by Jackson Goerner, Code by Jun Yu Tan, Shyam Kamalesh Borkar, Rachit Bhatia and Jobin Dan"
@@ -305,6 +306,10 @@ class Gastly(PokemonBase):
         haunter = Haunter()
         haunter.set_status_effect(self.get_status_effect())
         haunter.lose_hp(hp_difference)
+        # Hauter should have the same level as gastly. as they both start from level 1
+        for i in range(self.get_level() - 1):
+            haunter.level_up()
+            
         return haunter
 
 class Eevee(PokemonBase):
