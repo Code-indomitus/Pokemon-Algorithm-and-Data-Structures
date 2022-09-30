@@ -215,10 +215,15 @@ class TestTournament(BaseTest):
         t = Tournament(Battle(verbosity=0))
         t.set_battle_mode(0)
         t.start_tournament("Anthony James + Yessirr What + +")
-        l = t.linked_list_with_metas()
         
+        l = t.linked_list_with_metas()
+
+        # Anthony = [1, 1, 2, 0, 0]
+        # James = [0, 1, 0, 2, 3]
+        # Yessirr = [2, 0, 0, 3, 0]
+        # What = [0, 1, 1, 3, 1]
         expected = [
-            ['FIRE'],
+            ['FIRE'], # James and What do not have Fire types, but Anthony and Yessir do (lost to James and What)
             [],
             [],
         ]
@@ -232,8 +237,15 @@ class TestTournament(BaseTest):
         t = Tournament(Battle(verbosity=0))
         t.set_battle_mode(1)
         t.start_tournament("How Rachit + Shyam Jobin + + Wait Random + +")
+    
         l = t.linked_list_with_metas()
    
+        # How = [0, 1, 0, 1, 2]
+        # Rachit = [1, 1, 3, 1, 0]
+        # Shyam = [1, 3, 0, 1, 1]
+        # Jobin = [0, 1, 1, 0, 1]
+        # Wait = [1, 1, 2, 0, 0]
+        # Random = [1, 0, 2, 1, 0]
         expected = [
             [],
             [],
@@ -252,10 +264,14 @@ class TestTournament(BaseTest):
         t.start_tournament("Okay Nope + Lol Why + Can Really + + +")
         l = t.linked_list_with_metas()
 
-        print(l)
-        
+        # Okay = [0, 1, 1, 1, 0]
+        # Nope = [0, 0, 4, 1, 0]
+        # Lol = [0, 2, 2, 1, 1]
+        # Why = [0, 1, 3, 0, 0]
+        # Can = [2, 1, 2, 1, 0]
+        # Really [0, 2, 0, 3, 0]
         expected = [
-            ['NORMAL'],
+            ['NORMAL'], # Okay and Can do not have Normal type, but Lol do (lost to Can)
             [],
             [],
             [],
