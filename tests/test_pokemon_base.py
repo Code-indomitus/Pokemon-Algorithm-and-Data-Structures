@@ -39,7 +39,10 @@ class TestPokemonBase(BaseTest):
         self.assertEqual(g.should_evolve(), True)
         new_g = g.get_evolved_version()
         self.assertIsInstance(new_g, Haunter)
-
+        
+    ###########################################################
+    ################ Personal Designed Tests ##################
+    
     def test_is_fainted(self):
         """ Test to check if a pokemon is fainted after losing the correct amount of damage"""
         g = Gastly() # hp = 6
