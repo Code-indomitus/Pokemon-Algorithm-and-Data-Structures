@@ -271,7 +271,7 @@ class TestTournament(BaseTest):
         # Can = [2, 1, 2, 1, 0]
         # Really [0, 2, 0, 3, 0]
         expected = [
-            ['NORMAL'], # Okay and Can do not have Normal type, but Lol do (lost to Can)
+            ['NORMAL'], # Okay and Can do not have Normal type, but Lol does (lost to Can)
             [],
             [],
             [],
