@@ -17,6 +17,8 @@ are 0 the team is victorious.
 """
 class BattleTower:
 
+    """ Class to setup a Battle Tower for the team to fight through"""
+
     def __init__(self, battle: Battle|None=None) -> None:
         """ Sets up tha battle between the player's team and the tower.
 
