@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 
-"""
+""" This file contains a Poketeam class that will allow the creation of pokemon teams with a 
+certain number of pokemons. Teams can have different features like battle mode, ai mode and criterion
+for a particular battle mode.
 """
 __author__ = "Scaffold by Jackson Goerner, Code by Jun Yu Tan and Shyam Kamalesh Borkar."
 
@@ -32,6 +34,7 @@ class Criterion(Enum):
     DEF = auto()
 
 class PokeTeam:
+    """ Poketeam class to manage pokemons and featues of the poke team"""
 
     class AI(Enum):
         """ Enumumeration class AI to symbolise different AI modes available"""
@@ -182,6 +185,7 @@ class PokeTeam:
                                      Worst is O(n^2) where n is the length of the list (Bubble sort)
         """
         if self.battle_mode == 0:  # ArrayStack
+            # Swap the first and last pokemon in the stack if the stack'sl lenth is greater than 1
             if len(self.team) > 1:
 
                 temp_stack = ArrayStack(len(self.team) - 2)
@@ -202,6 +206,7 @@ class PokeTeam:
 
 
         if self.battle_mode == 1:  # CircularQueue
+            # swap the first and second halves of the CircularQueue
             half_number = len(self.team) // 2
             temp_stack = ArrayStack(half_number)
 
@@ -271,13 +276,14 @@ class PokeTeam:
         """
         if self.ai_type == PokeTeam.AI.ALWAYS_ATTACK:
             action = Action.ATTACK
-        elif self.ai_type == PokeTeam.AI.SWAP_ON_SUPER_EFFECTIVE:  # UNCLEAR
+        elif self.ai_type == PokeTeam.AI.SWAP_ON_SUPER_EFFECTIVE: 
             if their_pokemon.get_attack_damage() * their_pokemon.get_effective_multiplier(my_pokemon) >= 1.5 * their_pokemon.get_attack_damage():
                 action = Action.SWAP
             else:
                 action = Action.ATTACK
         elif self.ai_type == PokeTeam.AI.RANDOM:
             actions = list(Action)
+            # remove the heal action if team has used their max heals
             if self.num_of_heals <= 0:
                 actions.remove(Action.HEAL)
 
