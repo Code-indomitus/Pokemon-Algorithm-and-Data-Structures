@@ -123,7 +123,7 @@ class Tournament:
         '''Simulates one battle of the tournament, following the order of the previously given
         tournament string
         :complexity: O(B + P + Index)'''
-
+ 
         # Locate the position of the "+"
         try: 
             index = self.tournament_list.index("+")
