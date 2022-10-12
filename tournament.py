@@ -39,9 +39,13 @@ class Tournament:
         True if valid, False otherwise.
         :complexity: O(N*Index) where N is the size of the input (tournament_str) '''
         str_split_postfix = tournament_str.split()
-        postfix_operands = LinkedList()
+
+        # The teams present before converting to infix
+        postfix_operands = LinkedList() 
+
         s = LinkedList()
 
+        # Convert the post-fix tournament_str to infix 
         for i in str_split_postfix:
             # Push operands
             if i != '+':
@@ -58,12 +62,16 @@ class Tournament:
         result_infix = s[0][1:-1]
 
         str_split_infix = result_infix.split()
+
+        # The teams present after converting the tournament_str to infix 
         infix_operands = LinkedList()
 
+        # Insert the teams present after converting the tournament_str to infix
         for i in str_split_infix:
             if i != '+' and i != '(' and i != ')':
                 infix_operands.insert(len(infix_operands),i)
 
+        # Check if the number of teams present in the postfix_operands is the same with infix_operands 
         if len(infix_operands) == len(postfix_operands):
             return True
         else:
@@ -84,20 +92,24 @@ class Tournament:
         if not type(tournament_str) == str :
             raise TypeError("A string is expected for tournament_str")
 
+        # Check if the tournament_str is valid 
         if self.is_valid_tournament(tournament_str) :
             tournament_str_split = tournament_str.split()
 
             self.teams = LinkedList()
             team_names = LinkedList()
 
+            # Retrieve the names of the poketeams given in the tournament_str and insert them into team_names
             for i in tournament_str_split :
                 if i != '+' :             
                      team_names.insert(len(team_names),i)  
 
+            # Generate random teams using the names retrieved in the team_names 
             for j in range(len(team_names)):
                 poke_team = PokeTeam.random_team(team_names[j],self.battle_mode)
                 self.teams.insert(len(self.teams),poke_team)
 
+            # Insert the poketeam instances into the tournament_list in the same format as the tournament_str
             for i in range(len(tournament_str_split)):
                 for j in range(len(self.teams)):
                     if tournament_str_split[i] == self.teams[j].team_name :
@@ -111,15 +123,19 @@ class Tournament:
         '''Simulates one battle of the tournament, following the order of the previously given
         tournament string
         :complexity: O(B + P + Index)'''
+
+        # Locate the position of the "+"
         try: 
             index = self.tournament_list.index("+")
         except ValueError: 
-            return None
+            return None # return None if no more "+" in the tournament_list. Tournament ended
         else:
+            # Retrieve the 2 poketeams to battle at current turn 
             poketeam1 = self.tournament_list[index-2]
             poketeam2 = self.tournament_list[index-1]
             result = self.battle.battle(poketeam1,poketeam2)
 
+            # Remove the poketeam that lost from the tournament_list
             if result == 1 :
                 self.tournament_list.delete_at_index(index)
                 self.tournament_list.remove(poketeam2)
@@ -149,7 +165,7 @@ class Tournament:
                               where K is size of the temp linkedList '''
         l = LinkedList()
 
-
+        # Store all the teams that lost in the tournament
         battleHistory = LinkedList()
 
         while True:
@@ -157,12 +173,15 @@ class Tournament:
             if res is None:
                 break
 
+            # The two teams battling at current turn 
             team1 = res[0]
             team2 = res[1]
 
 
-
+            # Poketype not present in both the teams battling
             poketype_not_present_both_teams = BSet()
+
+            # Poketype present in the teams that lost 
             poketype_present_team_lost = BSet()
     
             
@@ -185,6 +204,7 @@ class Tournament:
             temp.insert(0,team1)
             temp.insert(1,team2)
 
+            # Find the teams that lost to these 2 teams currently battling
             for i in range(len(battleHistory)-1,-1,-1):
                 for j in range(len(temp)) :
                     if battleHistory[i][0].team_name == temp[j].team_name :
@@ -195,7 +215,7 @@ class Tournament:
             temp.delete_at_index(0)
             temp.delete_at_index(0)
 
-
+            # Find the poketypes present in the teams that lost 
             for i in range(len(temp)):
                 for j in range(len(temp[i].team_numbers)) :
                     if temp[i].team_numbers[j] != 0 :
@@ -210,6 +230,7 @@ class Tournament:
                         elif j == 4 :
                             poketype_present_team_lost.add(5)
 
+            # Poketype not present in both the teams battling but present in the teams that lost 
             result = poketype_not_present_both_teams.intersection(poketype_present_team_lost)
 
             if (1 in result):
