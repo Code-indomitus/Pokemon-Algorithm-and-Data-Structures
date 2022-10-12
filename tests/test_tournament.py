@@ -84,8 +84,10 @@ class TestTournament(BaseTest):
         t = Tournament()
         self.assertFalse(t.is_balanced_tournament("Roark Gardenia + Maylene Crasher_Wake + Fantina Byron + + + Candice Volkner + +"))
 
-    # OWN TEST CASES
 
+    ###########################################################
+    ################ Personal Designed Tests ##################
+    
     # Test set_battle_mode function
     def set_battle_mode_0(self):
         tournament = Tournament(Battle(verbosity=0))

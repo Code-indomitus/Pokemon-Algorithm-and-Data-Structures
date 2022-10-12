@@ -94,6 +94,9 @@ class TestTower(BaseTest):
 
         self.assertEqual(str(other_1), str(other_2))
     
+    ###########################################################
+    ################ Personal Designed Tests ##################
+    
     def test_generate_type_error(self):
         """ Test that generate function of BattleTower only takes in integers"""
         bt = BattleTower(Battle(verbosity=0))

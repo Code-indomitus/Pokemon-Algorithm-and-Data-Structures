@@ -21,8 +21,10 @@ class Battle:
     def check_action_precedence(self, action1: Action, action2: Action) -> int:
         """ Compares the actions of both teams and checks the precedence order of their actions.
         
-        :complexity: Best case = Worst case = O(1) because there is no condition which 
-                     stops the function execution early
+        :param team1: the first poketeam's action
+        :param team2: the second poketeam' action
+        :complexity: Best case = Worst case = O(I) where I is the complexity of getting the index of an item in an LinkedList
+        :return: an integer which represents the order in which the team actions are executed (integer 0,1,2)
         """
 
         #arranging the 4 actions in a linked list in the required order of precedence
@@ -40,31 +42,38 @@ class Battle:
         elif action_list.index(action1) < action_list.index(action2):
             return 2
 
+
     def battle(self, team1: PokeTeam, team2: PokeTeam) -> int:
         """ Handles all the battle actions. 
         Calls all the necessary functions based on the selected actions and precedence, and handles the subsequent behaviours.
 
+        :param team1: the first poketeam battling
+        :param team2: the second poketeam battling
         :complexity: Best O(1) if one of the teams is empty at the start itself so the loop never runs and the other functions called also have O(1) complexity
-                     Worst O(N) where N is the number of pokemons in a team (length of a team). O(N) is if both teams have N pokemons so the loop iterates until one of the teams gets empty.
+                     Worst O(N) where N is the number of actions each team executes. N depends on the AI modes and battle modes selected for input.
+        :return: the winner result (integer 0,1,2)
         """
 
         #initialising boolean values to see if a team used their max number of heals
         team1_used_max_heal = False
         team2_used_max_heal = False
 
+        #initalising with False values
+        both_alive = False  #both pokemons alive 
+        one_alive = False   #one pokemon alive
+
         #retrieving pokemons from both teams
         if (not team1.is_empty()) and (not team2.is_empty()):
             pokemon1 = team1.retrieve_pokemon()
             pokemon2 = team2.retrieve_pokemon()
         
-        count = 0
-        both_alive = False #both pokemons alive
-        one_alive = False   #one pokemon alive
+            # both booleans set to True because if retrieved, pokemons will be alive
+            both_alive = True #both pokemons alive 
+            one_alive = True   #one pokemon alive
         
 
         #while loop to manage the whole battle behaviour
         while ((not team1.is_empty()) and (not team2.is_empty())) or both_alive or one_alive:
-            count += 1
 
             #resetting the variables to ensure loop behaviour is only managed by each turn's actions
             both_alive = False  
@@ -125,7 +134,7 @@ class Battle:
                     team2.num_of_heals -= 1
                     
                 elif first_team_choice == Action.ATTACK:
-                    pokemon1, pokemon2 = self.both_attack(pokemon1, pokemon2)  #both teams attack
+                    self.both_attack(pokemon1, pokemon2)  #both teams attack
                
 
             #team 1 action is executed first due to higher action precedence
@@ -296,6 +305,8 @@ class Battle:
     def both_attack(self, first_pokemon: PokemonBase, second_pokemon: PokemonBase):
         """  Defines the behaviour when both teams attack each other (both teams choose ATTACK action).
 
+        :param first_pokemon: the pokemon from team 1
+        :param second_pokemon: the pokemon from team 2
         :complexity: Best Case = Worst Case = O(1) because all other functions called are also O(1), there
                      are no loops invoved, and there are no conditions which make the function exit early.
         """
@@ -321,21 +332,14 @@ class Battle:
             first_pokemon.attack(second_pokemon) #team 1's attack is processed first
             second_pokemon.attack(first_pokemon) #team 2 pokemon attacks even if it faints
 
-        return first_pokemon, second_pokemon
 
 
 if __name__ == "__main__":
-    # b = Battle(verbosity=3)
-    # RandomGen.set_seed(16)
-    # t1 = PokeTeam.random_team("Cynthia", 0, criterion=Criterion.SPD)
-    # t1.ai_type = PokeTeam.AI.USER_INPUT
-    # t2 = PokeTeam.random_team("Barry", 1)
-    RandomGen.set_seed(20)
-    battle = Battle(verbosity=0)
-    t1 = PokeTeam.random_team("Team 1", 0)
-    t2 = PokeTeam.random_team("Team 2", 0)
-    print (str(t1))
-    print (str(t2))
-    print(battle.battle(t1, t2))
-    print (str(t1))
-    print (str(t2))
+    b = Battle(verbosity=3)
+    RandomGen.set_seed(16)
+    t1 = PokeTeam.random_team("Cynthia", 0, criterion=Criterion.SPD)
+    t1.ai_type = PokeTeam.AI.USER_INPUT
+    t2 = PokeTeam.random_team("Barry", 1)
+    print(b.battle(t1, t2))
+
+

@@ -23,6 +23,9 @@ class TestPokemon(BaseTest):
 
         self.assertEqual(str(v), "LV. 5 Venusaur: 17 HP")
     
+    ###########################################################
+    ################ Personal Designed Tests ##################
+    
     def test_pokemon_speed(self):
         """ Test the expected speed stat of three pokemons"""
 
