@@ -1,6 +1,4 @@
-# Assignment 2 Template - REPLACE WITH GROUP NAME
-
-Template Repository for use in Assignment 2 - REPLACE
+# Assignment 2 Group 148
 
 ## Group Members
 
@@ -23,15 +21,15 @@ Template Repository for use in Assignment 2 - REPLACE
 - [x] Task 1
 - [x] Task 2
 - [x] Task 3
-- [ ] Task 4
-- [ ] Task 5
-- [ ] Task 6
+- [x] Task 4
+- [x] Task 5
+- [x] Task 6
 
 ## Complete Documentation!
 - [x] Task 1
 - [x] Task 2
 - [x] Task 3
-- [ ] Task 4
+- [x] Task 4
 - [x] Task 5
 - [x] Task 6
 
