@@ -1,6 +1,6 @@
-# Assignment 2 Group 148
+# Pokemon DSA
 
-## Group Members
+## Team
 
 - Jobin Mathew Dan (jdan0036@student.monash.edu)
 - Jun Yu Tan (jtan0245@student.monash.edu)
